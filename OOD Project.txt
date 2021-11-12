@@ -1,0 +1,62 @@
+OOD Project-- Summary 
+
+Classes-
+
+
+HOTEL
+5 Star Hotels |
+4 Star Hotels | - get and set methods 
+3 Star Hotels |	
+
+
+
+
+
+
+ROOM
+ArrayList<> prices
+-each day has a different price 
+-each room has a different price 
+-*inheritance for different Hotel Stars correspoding to each room 
+
+Room types, get and set methods 
+
+ArrayList<> Occupancy 
+-Occupancy min
+-Ocuupancy max 
+-Number of Occupancy 
+
+
+
+
+
+RESERVATION
+-Name	|
+-Number	| - get set methods 	
+-Type	|
+
+Type (S/AP) 
+-Discount 0.05 for AP
+
+Cancel()
+48 hours- no show charged full
+if() cancelled before full refund
+
+Total Cost
+	-Avaliable ?
+	-Type of Hotel
+	-Room
+	-Day of Booking	
+
+ArrayList<> Resv 
+-to store in a .csv file 
+-up to at least 7 Years..
+
+
+OTHER IMPORTANT
+Calculate % of occupancy of different rooms
+
+% of specific time where rooms are booked more 
+
+Income for each hotel over specific time 
+
