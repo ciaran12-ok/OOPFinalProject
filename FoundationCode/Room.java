@@ -18,6 +18,7 @@ public class Room {
 
     /**
      * No arg constructor
+     * Only used for testing purposes
      */
     public Room() {
 
@@ -152,9 +153,8 @@ public class Room {
 
 /**
  * A test class to make sure the room class is working as expected
- * NOTE: Put into a seperate file after??
+ *
  * @author Orla
- * @version 26/11/2021
  */
 class TestRoom {
 
