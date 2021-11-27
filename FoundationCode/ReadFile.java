@@ -1,18 +1,21 @@
 
-/**
- *
- * @author Áine
- */
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Class to read in all the information from the l4Hotel.csv file
+ * @author Aine
+ */
 public class ReadFile {
 
     private String[][] temp;
 
-    /*
-    reads in csv file, splits each line using comma delimiter
+   
+    /**
+     * Reads in csv file, splits each line using comma delimiter
+     * @return String[][]
+     * @throws FileNotFoundException 
      */
     public String[][] readCsvFile() throws FileNotFoundException {
         //NOTE: make sure you put the file l4Hotels.csv in the netBeans project
@@ -34,6 +37,11 @@ public class ReadFile {
 
 }
 
+/**
+ * A class to test is the readFile working as expected
+ *
+ * @author Orla
+ */
 class TestReadFile {
 
     public static void main(String[] args) {
