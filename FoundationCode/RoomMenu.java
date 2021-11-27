@@ -89,23 +89,20 @@ public class RoomMenu {
                     String rTy = in.next();
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
-                    System.out.println("Please enter your check in date:\n Day:");
-                    int dayIn = in.nextInt();
-                    System.out.println("Month:");
-                    int monthIn = in.nextInt();
-                    System.out.println("Year:");
-                    int yearIn = in.nextInt();
-                    LocalDate checkIn;
-                    checkIn = new LocalDate(dayIn, monthIn, yearIn);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = in.next();
+                    ResDate rIn = new ResDate(checkIn);
+                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                    System.out.println("Check in date is: "+ checkIn);
+                    booking.setCheckIn(localRin);
 
-                    System.out.println("Please enter your check out date:\n Day:");
-                    int dayOut = in.nextInt();
-                    System.out.println("Month:");
-                    int monthOut = in.nextInt();
-                    System.out.println("Year:");
-                    int yearOut = in.nextInt();
-                    LocalDate checkOut;
-                    checkIn = new LocalDate(dayOut, monthOut, yearOut);
+                   
+                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
+                    String checkOut = in.next();
+                    ResDate rOut = new ResDate(checkOut);
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out is: " + checkOut);
+                    booking.setCheckOut(localROut);
 
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());

@@ -16,11 +16,22 @@ public class Room {
     private int max;
     private int[] weeklyRates;
 
-
+    /**
+     * No arg constructor
+     */
     public Room() {
 
     }
 
+    /**
+     * Constructor that sets all the info about the room
+     *
+     * @param type
+     * @param noOfRooms
+     * @param min
+     * @param max
+     * @param weeklyRates
+     */
     public Room(String type, int noOfRooms, int min, int max, int[] weeklyRates) {
         this.type = type;
         this.noOfRooms = noOfRooms;
@@ -61,7 +72,7 @@ public class Room {
      *
      * @param NoOfRooms
      */
-    public void setNoOfRooms(int NoOfRooms) {
+    public void setNoOfRooms(int noOfRooms) {
         this.noOfRooms = noOfRooms;
     }
 
@@ -120,9 +131,35 @@ public class Room {
         this.weeklyRates = weeklyRates;
     }
 
-    public String toString(){
-        return "\n" +this.type;
+    /**
+     * Returns a String representation of a room
+     *
+     * @return String
+     */
+    @Override
+    public String toString() {
+        String ratesArray = "";
+        for (int i = 0; i < weeklyRates.length - 1; i++) {
+            ratesArray += weeklyRates[i] + ",";
+        }
+        ratesArray += weeklyRates[weeklyRates.length - 1];
+
+        return "\nRoom; Type:" + type + " NoOfRooms:" + noOfRooms + " Min:"
+                + min + " Max:" + max + " WeeklyRates:" + ratesArray;
     }
-        
 
 }
+
+/**
+ * A test class to make sure the room class is working as expected
+ * NOTE: Put into a seperate file after??
+ * @author Orla
+ * @version 26/11/2021
+ */
+
+/*
+
+
+*/
+
+

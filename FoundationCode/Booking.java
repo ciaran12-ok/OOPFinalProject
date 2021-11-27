@@ -1,4 +1,4 @@
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -15,8 +15,8 @@ public class Booking {
     private String reservationNumber;
     private String reservationName;
     private ReservationType rType;
-    private Date checkIn;
-    private Date checkOut;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private double bookingCost;
     //allows one customer to book several different rooms for different amounts of people
     private Reservation[] roomsToBook;
@@ -65,19 +65,19 @@ public class Booking {
         this.reservationName = reservationName;
     }
 
-    public Date getCheckIn() {
+    public LocalDate getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    public void setCheckIn(LocalDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Date getCheckOut() {
+    public LocalDate getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    public void setCheckOut(LocalDate checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -123,10 +123,10 @@ public class Booking {
      *
      * @return
      */
-    public double getRefundAmount(Date cancellationDate, Calender calender) {
+    public double getRefundAmount(LocalDate cancellationDate, Calender calender) {
         double refundAmount = 0;
         if (rType.isRefundableFromType() == true) {
-            if (checkIn.getDay() - cancellationDate.getDay() > 2) {
+            if (checkIn.getDayOfYear() - cancellationDate.getDayOfYear() > 2) {
                 refundAmount = bookingCost;
             } else {
                 refundAmount = 0;
@@ -154,5 +154,20 @@ public class Booking {
         String cost = "\nTotal Cost: " + bookingCost;
 
         return booking + rooms + cost;
+    }
+    
+    // My displayBooking method cos I'm too stupid to understand orlas
+    
+    public String displayBooking(String resNum ,String name, ReservationType type, LocalDate checkIn,
+                                    LocalDate checkOut, int numOfRooms){
+        
+        String booking = "\nReservation number: " + resNum +
+                         "\nReservation name: " + name +
+                         "\nCheck in date: " + checkIn +
+                         "\nCheck out date: " + checkOut + 
+                         "\nNumber of roooms booked: " + numOfRooms;
+        
+        return booking;
+    
     }
 }

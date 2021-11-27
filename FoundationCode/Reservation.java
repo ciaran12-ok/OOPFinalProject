@@ -1,4 +1,4 @@
-
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,8 +12,8 @@ public class Reservation {
     private String reservationNumber;
     private String reservationName;
     private ReservationType rType;
-    private Date checkIn;
-    private Date checkOut;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private String roomType;
     private int roomOccupancy;
 
@@ -22,7 +22,7 @@ public class Reservation {
     }
 
     public Reservation(String reservationNumber, String reservationName,
-            ReservationType rType, Date checkIn, Date checkOut, String roomType, int roomOccupancy) {
+            ReservationType rType, LocalDate checkIn, LocalDate checkOut, String roomType, int roomOccupancy) {
         this.reservationNumber = reservationNumber;
         this.reservationName = reservationName;
         this.rType = rType;
@@ -65,19 +65,19 @@ public class Reservation {
         this.reservationName = reservationName;
     }
 
-    public Date getCheckIn() {
+    public LocalDate getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    public void setCheckIn(LocalDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Date getCheckOut() {
+    public LocalDate getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    public void setCheckOut(LocalDate checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -121,18 +121,18 @@ public class Reservation {
         double cost = 0;
         //must change to whatever type of date we are using
         //thi method is deprecated
-        Date in = checkIn;
-        Date out = checkOut;
-        int inDay = checkIn.getDay();
-        int outDay = checkOut.getDay();
+        LocalDate in = checkIn;
+        LocalDate out = checkOut;
+        int inDay = checkIn.getDayOfYear();
+        int outDay = checkOut.getDayOfYear();
         int diff = outDay - inDay;
         String[] daysBooked = new String[diff];
 
        // Creates an array of days that want to be booked
-        for (int i = 0; i < diff; i++) {
-            in.setDate(inDay + i);
-            daysBooked[i] = in.getDayOfWeek();
-        }
+       // for (int i = 0; i < diff; i++) {
+          //  in.setDate(inDay + i);
+           // daysBooked[i] = in.;
+       // }
         return cost;
        }
    
