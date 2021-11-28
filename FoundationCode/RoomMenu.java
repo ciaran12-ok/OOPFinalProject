@@ -6,6 +6,7 @@
  */
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class RoomMenu {
 
                 System.out.println("Welcome to the reservation system.\n"
                         + "What type of Hotel would you like to stay in?\n"
-                        + "1) 5-STAR  2) 4-STAR 3) 3-STAR");
+                        + "1) 5-STAR  2) 4-STAR 3) 3-STAR 0) Exit");
                 int command1 = in.nextInt();
 
                 // 5-Star Hotel Choice tree
@@ -84,6 +85,7 @@ public class RoomMenu {
                         roomsToBeBooked[i] = reservation;
 
                     }
+                    booking.setRoomsToBook(roomsToBeBooked);
                     System.out.println("Please enter your name: ");
                     String name = in.next();
                     booking.setReservationName(name);
@@ -107,6 +109,23 @@ public class RoomMenu {
                     LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
                     System.out.println("Check out is: " + checkOut);
                     booking.setCheckOut(rIn);
+
+                    //Check if the booking number is unique before confirmation
+                    //And change it if it's not
+                    String bookingNum = booking.getReservationNumber();
+                    boolean unique = false;
+                    while (unique = false) {
+                        ArrayList<String> bookingNumbers = calender.getReservationNumbers();
+                        for (String num : bookingNumbers) {
+                            if (num.equals(bookingNum)) {
+                                unique = false;
+
+                            } else {
+                                unique = true;
+                            }
+                        }
+                        booking.setNewReservationNumber();
+                    }
 
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
@@ -190,6 +209,23 @@ public class RoomMenu {
                     System.out.println("Check out is: " + checkOut);
                     booking.setCheckOut(rIn);
 
+                    //Check if the booking number is unique before confirmation
+                    //And change it if it's not
+                    String bookingNum = booking.getReservationNumber();
+                    boolean unique = false;
+                    while (unique = false) {
+                        ArrayList<String> bookingNumbers = calender.getReservationNumbers();
+                        for (String num : bookingNumbers) {
+                            if (num.equals(bookingNum)) {
+                                unique = false;
+
+                            } else {
+                                unique = true;
+                            }
+                        }
+                        booking.setNewReservationNumber();
+                    }
+
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
                     System.out.println("1) Confirm \n2) Cancel");
@@ -272,6 +308,23 @@ public class RoomMenu {
                     System.out.println("Check out is: " + checkOut);
                     booking.setCheckOut(rIn);
 
+                    //Check if the booking number is unique before confirmation
+                    //And change it if it's not
+                    String bookingNum = booking.getReservationNumber();
+                    boolean unique = false;
+                    while (unique = false) {
+                        ArrayList<String> bookingNumbers = calender.getReservationNumbers();
+                        for (String num : bookingNumbers) {
+                            if (num.equals(bookingNum)) {
+                                unique = false;
+
+                            } else {
+                                unique = true;
+                            }
+                        }
+                        booking.setNewReservationNumber();
+                    }
+
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
                     System.out.println("1) Confirm \n2) Cancel");
@@ -289,13 +342,19 @@ public class RoomMenu {
                     }
 
                 }
+                if (command1 == 0) {
+                    System.exit(0);
+                }
 
             }
             if (entry1 == 2) {
                 System.out.println("Please enter your reservation number: ");
                 String entry2 = in.next();
-                //Look for their reservation in the reservation caledndar
-                //and print out their details
+                Reservation[] reservationFound = calender.findReservation(entry2);
+                for (int i = 0; i < reservationFound.length; i++) {
+                    //should be displayBooking(reservationFound)
+                    System.out.println(reservationFound[i]);
+                }
 
             }
             if (entry1 == 3) {

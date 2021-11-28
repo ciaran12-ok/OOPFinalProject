@@ -22,26 +22,15 @@ public class Booking {
     private static ArrayList<String> numbersUsed;
 
     /**
-     * No arg constructor that creates a unique reservation number for each booking
+     * No arg constructor that creates a unique reservation number for each
+     * booking
      */
     public Booking() {
 
-        //Creates a unique reservation number for each booking
-        boolean unique = false;
         Random rng = new Random();
-        int rNumber = 0;
-        String rNum = "";
-        while (unique = false) {
-            rNumber = 100000 + rng.nextInt(1000000);
-            rNum = String.valueOf(rNumber);            
-            for (String num : numbersUsed) {
-                if (rNum.equals(num)) {
-                    unique = false;
-                } else {
-                    unique = true;
-                }
-            }
-        }
+
+        int rNumber = 100000 + rng.nextInt(1000000);
+        String rNum = String.valueOf(rNumber);
         this.reservationNumber = rNum;
     }
 
@@ -69,6 +58,14 @@ public class Booking {
      */
     public void setrType(ReservationType rType) {
         this.rType = rType;
+    }
+
+    public String setNewReservationNumber() {
+        Random rng = new Random();
+        int rNumber = 100000 + rng.nextInt(1000000);
+        String rNum = String.valueOf(rNumber);
+        this.reservationNumber = rNum;
+        return rNum;
     }
 
     public String getReservationNumber() {
@@ -116,8 +113,7 @@ public class Booking {
     }
 
     /**
-     * Gets the total booking cost
-     * NEEDS TO BE FIXED
+     * Gets the total booking cost NEEDS TO BE FIXED
      *
      * @param reservationNumber
      * @param c
