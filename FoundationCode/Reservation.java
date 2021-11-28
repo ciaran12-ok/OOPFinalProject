@@ -1,4 +1,5 @@
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,17 +13,31 @@ public class Reservation {
     private String reservationNumber;
     private String reservationName;
     private ReservationType rType;
-    private Date checkIn;
-    private Date checkOut;
+    private ResDate checkIn;
+    private ResDate checkOut;
     private String roomType;
     private int roomOccupancy;
 
+    /**
+     * No arg constructor
+     */
     public Reservation() {
 
     }
 
+    /**
+     * Full constructor that allows a user to set all values of a reservation
+     *
+     * @param reservationNumber
+     * @param reservationName
+     * @param rType
+     * @param checkIn
+     * @param checkOut
+     * @param roomType
+     * @param roomOccupancy
+     */
     public Reservation(String reservationNumber, String reservationName,
-            ReservationType rType, Date checkIn, Date checkOut, String roomType, int roomOccupancy) {
+            ReservationType rType, ResDate checkIn, ResDate checkOut, String roomType, int roomOccupancy) {
         this.reservationNumber = reservationNumber;
         this.reservationName = reservationName;
         this.rType = rType;
@@ -33,58 +48,110 @@ public class Reservation {
 
     }
 
+    /**
+     * Method that returns the room type
+     *
+     * @return String
+     */
     public String getRoomType() {
         return roomType;
     }
 
+    /**
+     * Method that sets the room type
+     *
+     * @param roomType
+     */
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
 
+    /**
+     * Method that gets the room occupancy
+     *
+     * @return
+     */
     public int getRoomOccupancy() {
         return roomOccupancy;
     }
 
+    /**
+     * Method that sets the room occupancy
+     *
+     * @param roomOccupancy
+     */
     public void setRoomOccupancy(int roomOccupancy) {
         this.roomOccupancy = roomOccupancy;
     }
 
+    /**
+     * Method that gets the reservation number
+     *
+     * @return String
+     */
     public String getReservationNumber() {
         return reservationNumber;
     }
 
-    public void setReservationNumber(String reservationNumber) {
-        this.reservationNumber = reservationNumber;
-    }
-
+    /**
+     * Method that gets the reservation name
+     *
+     * @return String
+     */
     public String getReservationName() {
         return reservationName;
     }
 
+    /**
+     * Method that sets the reservation name
+     *
+     * @param reservationName
+     */
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
     }
 
-    public Date getCheckIn() {
+    /**
+     * Method that gets the check in date
+     *
+     * @return ResDate
+     */
+    public ResDate getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    /**
+     * Method that sets the check in date
+     *
+     * @param checkIn
+     */
+    public void setCheckIn(ResDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Date getCheckOut() {
+    /**
+     * Method that gets the check out date
+     *
+     * @return ResDate
+     */
+    public ResDate getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    /**
+     * Method that sets the check out date
+     *
+     * @param checkIn
+     */
+    public void setCheckOut(ResDate checkOut) {
         this.checkOut = checkOut;
     }
 
     /**
-     * Overrides the object equals method
-     * Checks whether two reservations have the same reservation number
-     * Allows you to check if a room reservation is under the same booking
+     * Overrides the object equals method Checks whether two reservations have
+     * the same reservation number Allows you to check if a room reservation is
+     * under the same booking
+     *
      * @param o
      * @return true or false
      */
@@ -102,38 +169,53 @@ public class Reservation {
         }
         return equals;
     }
-   
-        
 
     /**
-     * Method that will get the cost of booking a room for a number of days
-     * Need to change to a different date class
+     * Method that will get the cost of booking a room for a number of days Need
+     * to change to a different date class
+     *
+     * NEEDS TO BE FIXED
      *
      * @return cost
      */
     public double getCostReservation() {
-        
-        
-        //for checkindate to checkoutdate   
-       // find out what days of the week are being booked
-        //get the price of the room on those days and add up
-        
-        double cost = 0;
-        //must change to whatever type of date we are using
-        //thi method is deprecated
-        Date in = checkIn;
-        Date out = checkOut;
-        int inDay = checkIn.getDay();
-        int outDay = checkOut.getDay();
-        int diff = outDay - inDay;
-        String[] daysBooked = new String[diff];
 
-       // Creates an array of days that want to be booked
-        for (int i = 0; i < diff; i++) {
-            in.setDate(inDay + i);
-            daysBooked[i] = in.getDayOfWeek();
+        double cost = 0;
+
+        int inDay = checkIn.getDay();
+        int inMonth = checkIn.getMonth();
+        int inYear = checkIn.getYear();
+        LocalDate dateIn = LocalDate.of(inYear, inMonth, inDay);
+        int dayOfYearIn = dateIn.getDayOfYear();
+
+        int outDay = checkOut.getDay();
+        int outMonth = checkOut.getMonth();
+        int outYear = checkOut.getYear();
+        LocalDate dateOut = LocalDate.of(outYear, outMonth, outDay);
+        int dayOfYearOut = dateOut.getDayOfYear();
+
+        int difference = dayOfYearOut - dayOfYearIn;
+        ResDate[] daysBooked = new ResDate[difference];
+        
+        // Creates an array of days that want to be booked
+        for (int i = 0; i < difference; i++) {
+           
+            ResDate d = new ResDate(inDay + i,inMonth,inYear );
+            int dayOfWeek = d.getDayOfWeek();
+            //get the cost of that day 
+            // cost += ''
         }
+        
+        
         return cost;
-       }
-   
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation; " + "reservationNumber:" + reservationNumber + ", "
+                + "reservationName:" + reservationName + ", rType:" + rType.toString()
+                + ", checkIn:" + checkIn + ", checkOut:" + checkOut + ", roomType:"
+                + roomType + ", roomOccupancy:" + roomOccupancy;
+    }
+
 }
