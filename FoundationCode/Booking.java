@@ -1,10 +1,9 @@
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 /**
- * A class that creates several reservations if a customers want to book
+ * A class that creates several reservations if a customers wants to book
  * multiple type of rooms
  *
  * @author Orla
@@ -15,26 +14,35 @@ public class Booking {
     private String reservationNumber;
     private String reservationName;
     private ReservationType rType;
-    private Date checkIn;
-    private Date checkOut;
+    private ResDate checkIn;
+    private ResDate checkOut;
     private double bookingCost;
     //allows one customer to book several different rooms for different amounts of people
     private Reservation[] roomsToBook;
+    private static ArrayList<String> numbersUsed;
 
+    /**
+     * No arg constructor that creates a unique reservation number for each booking
+     */
     public Booking() {
 
         //Creates a unique reservation number for each booking
         boolean unique = false;
         Random rng = new Random();
         int rNumber = 0;
+        String rNum = "";
         while (unique = false) {
             rNumber = 100000 + rng.nextInt(1000000);
-            //search the arraylist of reservations for the same reseravtion number 
-            //if it's not found unique = true
-
-            unique = true;
-            reservationNumber = String.valueOf(rNumber);
+            rNum = String.valueOf(rNumber);            
+            for (String num : numbersUsed) {
+                if (rNum.equals(num)) {
+                    unique = false;
+                } else {
+                    unique = true;
+                }
+            }
         }
+        this.reservationNumber = rNum;
     }
 
     public Reservation[] getRoomsToBook() {
@@ -45,10 +53,20 @@ public class Booking {
         this.roomsToBook = roomsToBook;
     }
 
+    /**
+     * Method that returns the room type
+     *
+     * @return String
+     */
     public ReservationType getrType() {
         return rType;
     }
 
+    /**
+     * Method that sets the room type
+     *
+     * @param roomType
+     */
     public void setrType(ReservationType rType) {
         this.rType = rType;
     }
@@ -65,19 +83,19 @@ public class Booking {
         this.reservationName = reservationName;
     }
 
-    public Date getCheckIn() {
+    public ResDate getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    public void setCheckIn(ResDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Date getCheckOut() {
+    public ResDate getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    public void setCheckOut(ResDate checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -99,6 +117,7 @@ public class Booking {
 
     /**
      * Gets the total booking cost
+     * NEEDS TO BE FIXED
      *
      * @param reservationNumber
      * @param c
@@ -123,9 +142,9 @@ public class Booking {
      *
      * @return
      */
-    public double getRefundAmount(Date cancellationDate, Calender calender) {
+    public double getRefundAmount(ResDate cancellationDate, Calender calender) {
         double refundAmount = 0;
-        if (rType.isRefundableFromType() == true) {
+        if (rType.isRefundable() == true) {
             if (checkIn.getDay() - cancellationDate.getDay() > 2) {
                 refundAmount = bookingCost;
             } else {
@@ -145,7 +164,7 @@ public class Booking {
         String booking = "\nReservation name: " + reservationName + "\nReservation type: "
                 + "\nCheck in date: " + checkIn + "\nCheck out date: " + checkOut + "\nNumber of rooms booked: "
                 + roomsToBook.length;
-        String rooms = "";
+        String rooms = "Rooms: ";
         for (Reservation r : roomsToBook) {
             String roomType = r.getRoomType();
             int occupancy = r.getRoomOccupancy();

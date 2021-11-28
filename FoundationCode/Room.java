@@ -145,7 +145,7 @@ public class Room {
         }
         ratesArray += weeklyRates[weeklyRates.length - 1];
 
-        return "\nRoom; Type:" + type + " NoOfRooms:" + noOfRooms + " Min:"
+        return "Room; Type:" + type + " NoOfRooms:" + noOfRooms + " Min:"
                 + min + " Max:" + max + " WeeklyRates:" + ratesArray;
     }
 
