@@ -3,6 +3,7 @@
  *
  * @author ciaranokeeffe
  * @author Orla
+ * @author Nabel 
  */
 import java.time.LocalDate;
 import java.util.GregorianCalendar;
@@ -89,23 +90,23 @@ public class RoomMenu {
                     String rTy = in.next();
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
-                    System.out.println("Please enter your check in date:\n Day:");
-                    int dayIn = in.nextInt();
+                    System.out.println("Please enter your check in date:\n Year:");
+                    int yearIn = in.nextInt();
                     System.out.println("Month:");
                     int monthIn = in.nextInt();
-                    System.out.println("Year:");
-                    int yearIn = in.nextInt();
+                    System.out.println("Day:");
+                    int dayIn = in.nextInt();
                     LocalDate checkIn;
-                    checkIn = new LocalDate(dayIn, monthIn, yearIn);
+                    checkIn = LocalDate.of(yearIn,monthIn,dayIn);
 
-                    System.out.println("Please enter your check out date:\n Day:");
-                    int dayOut = in.nextInt();
+                    System.out.println("Please enter your check out date:\n Year:");
+                    int yearOut = in.nextInt();
                     System.out.println("Month:");
                     int monthOut = in.nextInt();
-                    System.out.println("Year:");
-                    int yearOut = in.nextInt();
+                    System.out.println("Day:");
+                    int dayOut = in.nextInt();
                     LocalDate checkOut;
-                    checkIn = new LocalDate(dayOut, monthOut, yearOut);
+                    checkIn = LocalDate.of(yearOut, monthOut, dayOut);
 
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
