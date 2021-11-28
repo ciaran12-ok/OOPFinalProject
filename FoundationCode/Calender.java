@@ -1,85 +1,134 @@
 
+import java.util.ArrayList;
+
 /**
+ * A class to represent a Calender that holds reservations
  *
  * @author Nabel Sodipe
  * @date 13/11/2021
  */
-import java.time.LocalDate;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.ArrayList;
-
 public class Calender {
 
-    private Date checkinDate;
-    private Date checkoutDate;
     private ArrayList<Reservation> reservations;
 
-    public void Calender() {
-        reservations = new ArrayList<>();
-    }
+    //Used only for the find booking method
+    private ArrayList<String> reservationNumbers;
 
-    // getInstance() gets a calander using the specified time zone 
-    // we set the the default Dates to a certain date e.g. 2021/11/17
-    public final void SetReservationDates(int DaysFromNow, int Stay) {
-        Calendar ref = Calendar.getInstance();
-        ref.set(ref.get(Calendar.YEAR),
-                ref.get(Calendar.MONTH),
-                ref.get(Calendar.DAY_OF_MONTH)
-                + DaysFromNow, 2021, 11, 17);
-
-        checkinDate = ref.getTime();
-
-        ref.add(Calendar.DAY_OF_MONTH, Stay);
-
-        checkoutDate = ref.getTime();
-    }
-
-    public Date getCheckinDate() {
-        return checkinDate;
-    }
-
-    public Date getCheckoutDate() {
-        return checkoutDate;
-    }
-
-    public void setCheckinDate(Date checkinDate) {
-        this.checkinDate = checkinDate;
-    }
-
-    public void setCheckoutDate(Date checkoutDate) {
-        this.checkoutDate = checkoutDate;
+    /**
+     * No arg constructor that creates a calender
+     */
+    public Calender() {
+        reservations = new ArrayList<Reservation>();
+        reservationNumbers = new ArrayList<String>();
     }
 
     /**
      * Adds a booking to the calender
-     * @param r 
+     *
+     * @param r
      */
     public void addToCalender(Reservation r) {
         reservations.add(r);
+        reservationNumbers.add(r.getReservationNumber());
     }
 
-    
-    
     /**
-     * Removes a booking form a calender
-     * @param r 
+     * Removes a booking from a calender
+     *
+     * @param r
      */
-    public void removeBooking(Reservation r) {
-        for (Reservation res : reservations) {
-            if (res.equals(r)) {
-                reservations.remove(res);
-            }
-        }
-
+    public void removeReservation(Reservation res) {
+        reservations.remove(res);
+        reservationNumbers.remove(res.getReservationNumber());
     }
-/**
- * Returns the array list of reservations
- * @return 
- */
+
+    /**
+     * Returns the array list of reservations
+     *
+     * @return
+     */
     public ArrayList<Reservation> getReservations() {
         return reservations;
     }
 
+    /**
+     * Method that finds a reservation based off it's reservation number
+     *
+     * @param reservationNumber
+     * @return Reservation
+     */
+    public Reservation findReservation(String reservationNumber) {
+
+        int index = 0;
+        if (reservationNumbers.contains(reservationNumber)) {
+            index = reservationNumbers.indexOf(reservationNumber);
+        } else {
+            System.out.println("Invalid reservation number, please try again.");
+        }
+        Reservation res = reservations.get(index);
+
+        return res;
+    }
+
+}
+
+/**
+ * Class to test that the Calender class is working as expected
+ *
+ * @author Orla
+ * @version 28/11/2021
+ */
+class TestCalender {
+
+    public static void main(String[] args) {
+        Calender myCalender = new Calender();
+
+        /*
+        Test 1: checking to see whether all reservations are added to the calender
+         */
+        Reservation res1 = new Reservation("2023", "John", new ReservationType("AP"), new ResDate("20/11/2021"),
+                new ResDate("23/11/2021"), "Single", 1);
+        Reservation res2 = new Reservation("2033", "Mary", new ReservationType("S"), new ResDate("19/11/2021"),
+                new ResDate("25/11/2021"), "Double", 2);
+        Reservation res3 = new Reservation("2044", "Joe", new ReservationType("S"), new ResDate("18/10/2021"),
+                new ResDate("20/10/2021"), "Double", 1);
+        myCalender.addToCalender(res1);
+        myCalender.addToCalender(res2);
+        myCalender.addToCalender(res3);
+
+        ArrayList<Reservation> reservations1 = new ArrayList<>();
+        reservations1 = myCalender.getReservations();
+        System.out.println("Test 1");
+        for (Reservation r : reservations1) {
+            System.out.println(r.toString());
+        }
+        System.out.println("Test 1 Passed");
+        System.out.println("");
+
+        /*
+        Test 2 : checking to see whether a reservation is removed successfully
+         */
+        myCalender.removeReservation(res3);
+        ArrayList<Reservation> reservations2 = new ArrayList<>();
+        reservations2 = myCalender.getReservations();
+        System.out.println("Test 2");
+        for (Reservation r : reservations2) {
+            System.out.println(r.toString());
+        }
+        System.out.println("Test 2 Passed");
+        System.out.println("");
+
+        /*
+        Test 3 : checking to see whether the findReservation method works
+         */
+        Reservation r = myCalender.findReservation("2023");
+        String expectedOutput = res1.toString();
+        String actualOutput = r.toString();
+        if (expectedOutput.equals(actualOutput)) {
+            System.out.println("Test 3 Passed");
+        } else {
+            System.out.println("Test 3 Failed");
+        }
+
+    }
 }
