@@ -4,6 +4,7 @@
  * @author ciaranokeeffe
  * @author Orla
  */
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
@@ -18,9 +19,11 @@ public class RoomMenu {
         in = new Scanner(System.in);
     }
 
-    public void run() {
+    public void run() throws FileNotFoundException {
         Calender calender = new Calender();
-        CreateHotels newHotel = new CreateHotels();
+        ReadFile file = new ReadFile();
+        String[][] input = file.readCsvFile();
+        CreateHotels newHotel = new CreateHotels(input);
 
         Hotel hotel5 = newHotel.getHotel5();
         Hotel hotel4 = newHotel.getHotel4();
@@ -51,6 +54,7 @@ public class RoomMenu {
                     //Adds it to a roomsToBeBooked array
                     //The booking can now be created
                     for (int i = 0; i < numOfRooms; i++) {
+                        System.out.println(" ");
                         System.out.println("Room number:" + (i + 1));
                         //Create an array of rooms to be booked
                         //setRooms to be booked with that arrya
@@ -63,6 +67,88 @@ public class RoomMenu {
                         }
                         int roomIndex = in.nextInt();
                         Room[] roomArray = hotel5.getRoomsAvailable();
+
+                        Room room = roomArray[roomIndex];
+                        String roomType = room.getType();
+                        reservation.setRoomType(roomType);
+
+                        System.out.println("For how many people: ");
+                        int occupancy = in.nextInt();
+                        while (occupancy > room.getMax()) {
+                            System.out.println("Maximum occupancy is: " + room.getMax());
+                            System.out.println("Please enter a valid occupancy:");
+                            occupancy = in.nextInt();
+                        }
+                        reservation.setRoomOccupancy(occupancy);
+
+                        roomsToBeBooked[i] = reservation;
+
+                    }
+                    System.out.println("Please enter your name: ");
+                    String name = in.next();
+                    booking.setReservationName(name);
+                    System.out.println("Please select a reservation type: ");
+                    System.out.println("Enter AP for Advanced Purchase put info for AP");
+                    System.out.println("Enter S for Standard Purchase put info for S");
+                    String rTy = in.next();
+                    ReservationType rType = new ReservationType(rTy);
+                    booking.setrType(rType);
+
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = in.next();
+                    ResDate rIn = new ResDate(checkIn);
+                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                    System.out.println("Check in date is: " + checkIn);
+                    booking.setCheckIn(rIn);
+
+                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
+                    String checkOut = in.next();
+                    ResDate rOut = new ResDate(checkOut);
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out is: " + checkOut);
+                    booking.setCheckOut(rIn);
+
+                    System.out.println("Your booking information: ");
+                    System.out.println(booking.diplayBooking());
+                    System.out.println("1) Confirm \n2) Cancel");
+                    int confirm = in.nextInt();
+                    if (confirm == 1) {
+                        booking.bookRooms(calender);
+                        //add to the csv files for reservations
+                        //show booking number and ask them tp save it for proof
+                        System.out.println("Thank you for choosing to stay with us.\n"
+                                + "Your booking number is: " + booking.getReservationNumber());
+                        System.out.println("Please keep this number as proof of purchase");
+                    } else if (confirm == 2) {
+                        System.out.println("You have cancelled your booking");
+                        more = false;
+                    }
+
+                }
+                //4 Star hotel tree
+                if (command1 == 2) {
+
+                    System.out.println("How many rooms would you like to book:");
+                    int numOfRooms = in.nextInt();
+                    Reservation[] roomsToBeBooked = new Reservation[numOfRooms];
+
+                    //Takes in each room that they want to book and it's details
+                    //Adds it to a roomsToBeBooked array
+                    //The booking can now be created
+                    for (int i = 0; i < numOfRooms; i++) {
+                        System.out.println(" ");
+                        System.out.println("Room number:" + (i + 1));
+                        //Create an array of rooms to be booked
+                        //setRooms to be booked with that arrya
+                        Reservation reservation = new Reservation();
+
+                        System.out.println("What type of room would you like to book:");
+                        String[] rooms = hotel4.getRoomOptions();
+                        for (String r : rooms) {
+                            System.out.println(r);
+                        }
+                        int roomIndex = in.nextInt();
+                        Room[] roomArray = hotel4.getRoomsAvailable();
                         //Problem
                         Room room = roomArray[roomIndex];
                         String roomType = room.getType();
@@ -89,23 +175,102 @@ public class RoomMenu {
                     String rTy = in.next();
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
-                    System.out.println("Please enter your check in date:\n Day:");
-                    int dayIn = in.nextInt();
-                    System.out.println("Month:");
-                    int monthIn = in.nextInt();
-                    System.out.println("Year:");
-                    int yearIn = in.nextInt();
-                    LocalDate checkIn;
-                    checkIn = new LocalDate(dayIn, monthIn, yearIn);
 
-                    System.out.println("Please enter your check out date:\n Day:");
-                    int dayOut = in.nextInt();
-                    System.out.println("Month:");
-                    int monthOut = in.nextInt();
-                    System.out.println("Year:");
-                    int yearOut = in.nextInt();
-                    LocalDate checkOut;
-                    checkIn = new LocalDate(dayOut, monthOut, yearOut);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = in.next();
+                    ResDate rIn = new ResDate(checkIn);
+                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                    System.out.println("Check in date is: " + checkIn);
+                    booking.setCheckIn(rIn);
+
+                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
+                    String checkOut = in.next();
+                    ResDate rOut = new ResDate(checkOut);
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out is: " + checkOut);
+                    booking.setCheckOut(rIn);
+
+                    System.out.println("Your booking information: ");
+                    System.out.println(booking.diplayBooking());
+                    System.out.println("1) Confirm \n2) Cancel");
+                    int confirm = in.nextInt();
+                    if (confirm == 1) {
+                        booking.bookRooms(calender);
+                        //add to the csv files for reservations
+                        //show booking number and ask them tp save it for proof
+                        System.out.println("Thank you for choosing to stay with us.\n"
+                                + "Your booking number is: " + booking.getReservationNumber());
+                        System.out.println("Please keep this number as proof of purchase");
+                    } else if (confirm == 2) {
+                        System.out.println("You have cancelled your booking");
+                        more = false;
+                    }
+
+                }
+                //3 Star Hotel Tree
+                if (command1 == 3) {
+
+                    System.out.println("How many rooms would you like to book:");
+                    int numOfRooms = in.nextInt();
+                    Reservation[] roomsToBeBooked = new Reservation[numOfRooms];
+
+                    //Takes in each room that they want to book and it's details
+                    //Adds it to a roomsToBeBooked array
+                    //The booking can now be created
+                    for (int i = 0; i < numOfRooms; i++) {
+                        System.out.println(" ");
+                        System.out.println("Room number:" + (i + 1));
+                        //Create an array of rooms to be booked
+                        //setRooms to be booked with that arrya
+                        Reservation reservation = new Reservation();
+
+                        System.out.println("What type of room would you like to book:");
+                        String[] rooms = hotel3.getRoomOptions();
+                        for (String r : rooms) {
+                            System.out.println(r);
+                        }
+                        int roomIndex = in.nextInt();
+                        Room[] roomArray = hotel3.getRoomsAvailable();
+                        //Problem
+                        Room room = roomArray[roomIndex];
+                        String roomType = room.getType();
+                        reservation.setRoomType(roomType);
+
+                        System.out.println("For how many people: ");
+                        int occupancy = in.nextInt();
+                        while (occupancy > room.getMax()) {
+                            System.out.println("Maximum occupancy is: " + room.getMax());
+                            System.out.println("Please enter a valid occupancy:");
+                            occupancy = in.nextInt();
+                        }
+                        reservation.setRoomOccupancy(occupancy);
+
+                        roomsToBeBooked[i] = reservation;
+
+                    }
+                    System.out.println("Please enter your name: ");
+                    String name = in.next();
+                    booking.setReservationName(name);
+                    System.out.println("Please select a reservation type: ");
+                    System.out.println("Enter AP for Advanced Purchase put info for AP");
+                    System.out.println("Enter S for Standard Purchase put info for S");
+                    String rTy = in.next();
+                    ReservationType rType = new ReservationType(rTy);
+                    booking.setrType(rType);
+
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = in.next();
+                    ResDate rIn = new ResDate(checkIn);
+                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                    System.out.println("Check in date is: " + checkIn);
+                    booking.setCheckIn(rIn);
+
+                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
+                    String checkOut = in.next();
+                    ResDate rOut = new ResDate(checkOut);
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out is: " + checkOut);
+                    booking.setCheckOut(rIn);
 
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
@@ -125,50 +290,6 @@ public class RoomMenu {
 
                 }
 
-//                // 4-Star Hotel Choice Tree
-//                if (command1 == 2) {
-//                    System.out.println("Which room would you like to book?"
-//                            + "1) Executive Double 2) Executive Twin 3) Executive Single");
-//                    int command2 = in.nextInt() - 1;
-//                    Room chosenRoom = room.fourStarRooms[command2];
-//                    room.setType(chosenRoom.getType());
-//                    
-//                    System.out.println("Amount of rooms available is" + chosenRoom.getNoOfRooms());
-//                    System.out.println("How many rooms would you like to book?");
-//                    
-//                    numOfRooms = in.nextInt();
-//                    if (numOfRooms - chosenRoom.getNoOfRooms() < 0) {
-//                        System.out.println("Invalid number, try again");
-//                    }
-//                    if (numOfRooms > chosenRoom.getNoOfRooms()) {
-//                        System.out.println("Not enough rooms available");
-//                        
-//                    } else {
-//                        chosenRoom.setNoOfRooms(chosenRoom.getNoOfRooms() - numOfRooms);
-//                    }
-//                }
-//                
-//                if (command1 == 3) {
-//                    System.out.println("Which room would you like to book?"
-//                            + "1)classic Double 2) Classic Twin");
-//                    int command2 = in.nextInt() - 1;
-//                    Room chosenRoom = room.fourStarRooms[command2];
-//                    room.setType(chosenRoom.getType());
-//                    
-//                    System.out.println("Amount of rooms available is" + chosenRoom.getNoOfRooms());
-//                    System.out.println("How many rooms would you like to book?");
-//                    
-//                    numOfRooms = in.nextInt();
-//                    if (numOfRooms - chosenRoom.getNoOfRooms() < 0) {
-//                        System.out.println("Invalid number, try again");
-//                    }
-//                    if (numOfRooms > chosenRoom.getNoOfRooms()) {
-//                        System.out.println("Not enough rooms available");
-//                        
-//                    } else {
-//                        chosenRoom.setNoOfRooms(chosenRoom.getNoOfRooms() - numOfRooms);
-//                    }
-//                }
             }
             if (entry1 == 2) {
                 System.out.println("Please enter your reservation number: ");
