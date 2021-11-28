@@ -51,23 +51,42 @@ public class Calender {
         return reservations;
     }
 
+    public ArrayList<String> getReservationNumbers() {
+        return reservationNumbers;
+    }
+
     /**
-     * Method that finds a reservation based off it's reservation number
+     * Method that finds a reservation based off it's reservation number NEED TO FIX
      *
+     * It's adding the first reservation to the array three times
+     * 
+     * Make a find booking method??
+     * 
+     * 
      * @param reservationNumber
      * @return Reservation
      */
-    public Reservation findReservation(String reservationNumber) {
+    public Reservation[] findReservation(String reservationNumber) {
 
-        int index = 0;
+        ArrayList<Integer> index = new ArrayList<Integer>();
         if (reservationNumbers.contains(reservationNumber)) {
-            index = reservationNumbers.indexOf(reservationNumber);
+            for (String resNumbers : reservationNumbers) {
+                if (resNumbers.equals(reservationNumber)) {
+                    index.add(reservationNumbers.indexOf(resNumbers));
+                }
+            }
         } else {
             System.out.println("Invalid reservation number, please try again.");
         }
-        Reservation res = reservations.get(index);
 
-        return res;
+        Reservation[] reservationsFound = new Reservation[index.size()];
+        int i = 0;
+        for(Integer in:index){
+            reservationsFound[i] = reservations.get(in);
+            i++;
+        }
+
+        return reservationsFound;
     }
 
 }
@@ -92,9 +111,16 @@ class TestCalender {
                 new ResDate("25/11/2021"), "Double", 2);
         Reservation res3 = new Reservation("2044", "Joe", new ReservationType("S"), new ResDate("18/10/2021"),
                 new ResDate("20/10/2021"), "Double", 1);
+        Reservation res4 = new Reservation("2023", "John", new ReservationType("S"), new ResDate("21/11/2021"),
+                new ResDate("23/11/2021"), "Single", 1);
+         Reservation res5 = new Reservation("2023", "John", new ReservationType("S"), new ResDate("22/11/2021"),
+                new ResDate("23/11/2021"), "Single", 2);
+
         myCalender.addToCalender(res1);
         myCalender.addToCalender(res2);
         myCalender.addToCalender(res3);
+        myCalender.addToCalender(res4);
+         myCalender.addToCalender(res5);
 
         ArrayList<Reservation> reservations1 = new ArrayList<>();
         reservations1 = myCalender.getReservations();
@@ -121,14 +147,11 @@ class TestCalender {
         /*
         Test 3 : checking to see whether the findReservation method works
          */
-        Reservation r = myCalender.findReservation("2023");
-        String expectedOutput = res1.toString();
-        String actualOutput = r.toString();
-        if (expectedOutput.equals(actualOutput)) {
-            System.out.println("Test 3 Passed");
-        } else {
-            System.out.println("Test 3 Failed");
+        Reservation[] r = myCalender.findReservation("2023");
+        for(int i = 0;i<r.length;i++){
+             System.out.println(r[i]);
         }
+       
 
     }
 }
