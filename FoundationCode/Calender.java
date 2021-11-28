@@ -1,85 +1,56 @@
-
 /**
  *
- * @author Nabel Sodipe
- * @date 13/11/2021
+ * @author Nabel Sodipe 
+ * 
  */
 import java.time.LocalDate;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ArrayList;
 
 public class Calender {
-
-    private Date checkinDate;
-    private Date checkoutDate;
+    private LocalDate Date1;
+    private LocalDate Date2;
     private ArrayList<Reservation> reservations;
-
-    public void Calender() {
+    
+    
+    //creating an arraylist for reservations 
+    public void Calander(){
         reservations = new ArrayList<>();
+    } 
+    
+    //adds a reservation from calander        
+    public void addToCalender(Reservation res){
+        reservations.add(res);
     }
-
-    // getInstance() gets a calander using the specified time zone 
-    // we set the the default Dates to a certain date e.g. 2021/11/17
-    public final void SetReservationDates(int DaysFromNow, int Stay) {
-        Calendar ref = Calendar.getInstance();
-        ref.set(ref.get(Calendar.YEAR),
-                ref.get(Calendar.MONTH),
-                ref.get(Calendar.DAY_OF_MONTH)
-                + DaysFromNow, 2021, 11, 17);
-
-        checkinDate = ref.getTime();
-
-        ref.add(Calendar.DAY_OF_MONTH, Stay);
-
-        checkoutDate = ref.getTime();
-    }
-
-    public Date getCheckinDate() {
-        return checkinDate;
-    }
-
-    public Date getCheckoutDate() {
-        return checkoutDate;
-    }
-
-    public void setCheckinDate(Date checkinDate) {
-        this.checkinDate = checkinDate;
-    }
-
-    public void setCheckoutDate(Date checkoutDate) {
-        this.checkoutDate = checkoutDate;
-    }
-
-    /**
-     * Adds a booking to the calender
-     * @param r 
-     */
-    public void addToCalender(Reservation r) {
-        reservations.add(r);
-    }
-
     
     
-    /**
-     * Removes a booking form a calender
-     * @param r 
-     */
-    public void removeBooking(Reservation r) {
-        for (Reservation res : reservations) {
-            if (res.equals(r)) {
-                reservations.remove(res);
-            }
+    //removing a reservation 
+    public void cancel(Reservation a){
+        
+        for(int i =0; i < reservations.size(); i++){
+            if(reservations.get(i).equals(a)){
+                reservations.remove(a);
+                    
+                return;
+        }  
         }
-
+        
     }
-/**
- * Returns the array list of reservations
- * @return 
- */
-    public ArrayList<Reservation> getReservations() {
-        return reservations;
+    
+    // Checks if Dates within Range could be used for csv. file to check for busy Dates
+    public boolean DateWithinRange(LocalDate resDate){
+        
+        boolean result = false;
+        
+        if((resDate.isEqual(Date1) || resDate.isEqual(Date2))
+                || (resDate.isBefore(Date2) && resDate.isAfter(Date1))){
+                result = true;
+        }
+        return result;
     }
-
+     //returns all the reservaitons in the ArrayList       
+     public ArrayList<Reservation> getReservations(){
+         return reservations;
+     } 
+     
+     
 }
