@@ -64,6 +64,7 @@ public class Reservation {
      */
     public void setRoomType(String roomType) {
         this.roomType = roomType;
+
     }
 
     /**
@@ -171,45 +172,43 @@ public class Reservation {
     }
 
     /**
-     * Method that will get the cost of booking a room for a number of days Need
-     * to change to a different date class
+     * Method that will get the cost of booking a room for a number of days
      *
      * NEEDS TO BE FIXED
      *
      * @return cost
      */
-    public double getCostReservation() {
+    public double getCostReservation(Room room) {
 
         double cost = 0;
 
-        int inDay = checkIn.getDay();
-        int inMonth = checkIn.getMonth();
-        int inYear = checkIn.getYear();
-        LocalDate dateIn = LocalDate.of(inYear, inMonth, inDay);
+        LocalDate dateIn = checkIn.convertToLocal();
         int dayOfYearIn = dateIn.getDayOfYear();
 
-        int outDay = checkOut.getDay();
-        int outMonth = checkOut.getMonth();
-        int outYear = checkOut.getYear();
-        LocalDate dateOut = LocalDate.of(outYear, outMonth, outDay);
+        LocalDate dateOut = checkOut.convertToLocal();
         int dayOfYearOut = dateOut.getDayOfYear();
 
         int difference = dayOfYearOut - dayOfYearIn;
-        ResDate[] daysBooked = new ResDate[difference];
-        
-        // Creates an array of days that want to be booked
+
+        // Creates an array of days that want to be booked    
         for (int i = 0; i < difference; i++) {
-           
-            ResDate d = new ResDate(inDay + i,inMonth,inYear );
-            int dayOfWeek = d.getDayOfWeek();
-            //get the cost of that day 
-            // cost += ''
+            //Increases the day and keeps the months etc valid
+            dateIn.plusDays(i);
+            ResDate date = new ResDate(dateIn.getYear(), dateIn.getMonthValue(), dateIn.getDayOfMonth());
+
+            int dayOfWeek = date.getDayOfWeek();
+            cost += room.getWeeklyRates()[dayOfWeek];
+
         }
-        
-        
+
         return cost;
     }
 
+    /**
+     * Method that returns a string representation of a reservation
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Reservation; " + "reservationNumber:" + reservationNumber + ", "

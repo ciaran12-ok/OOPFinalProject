@@ -4,6 +4,7 @@
  * @author ciaranokeeffe
  * @author Orla
  */
+
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,7 +50,8 @@ public class RoomMenu {
 
                     System.out.println("How many rooms would you like to book:");
                     int numOfRooms = in.nextInt();
-                    Reservation[] roomsToBeBooked = new Reservation[numOfRooms];
+                    Reservation[] roomsToBeReserved = new Reservation[numOfRooms];
+                    Room[] roomsToBeBooked = new Room[numOfRooms];
 
                     //Takes in each room that they want to book and it's details
                     //Adds it to a roomsToBeBooked array
@@ -81,11 +83,12 @@ public class RoomMenu {
                             occupancy = in.nextInt();
                         }
                         reservation.setRoomOccupancy(occupancy);
-
-                        roomsToBeBooked[i] = reservation;
+                        roomsToBeBooked[i] = room;
+                        roomsToBeReserved[i] = reservation;
 
                     }
                     booking.setRoomsToBook(roomsToBeBooked);
+                    booking.setRoomsToReserve(roomsToBeReserved);
                     System.out.println("Please enter your name: ");
                     String name = in.next();
                     booking.setReservationName(name);
@@ -126,7 +129,7 @@ public class RoomMenu {
                         }
                         booking.setNewReservationNumber();
                     }
-
+                    booking.getBookingCost(booking.getReservationNumber(), calender);
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
                     System.out.println("1) Confirm \n2) Cancel");
@@ -350,11 +353,11 @@ public class RoomMenu {
             if (entry1 == 2) {
                 System.out.println("Please enter your reservation number: ");
                 String entry2 = in.next();
-                Reservation[] reservationFound = calender.findReservation(entry2);
-                for (int i = 0; i < reservationFound.length; i++) {
-                    //should be displayBooking(reservationFound)
-                    System.out.println(reservationFound[i]);
-                }
+                //Reservation[] reservationFound = calender.findReservation(entry2);
+//                for (int i = 0; i < reservationFound.length; i++) {
+//                    //should be displayBooking(reservationFound)
+//                    System.out.println(reservationFound[i]);
+//                }
 
             }
             if (entry1 == 3) {

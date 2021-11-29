@@ -24,7 +24,7 @@ public class ReadFile {
         Scanner input = new Scanner(file);
 
         String line;
-        this.temp = new String[12][12];
+        this.temp = new String[11][12];
         int i = 0;
         while (input.hasNext()) {
             line = input.nextLine();

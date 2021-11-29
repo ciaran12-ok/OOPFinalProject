@@ -37,15 +37,16 @@ public class ResDate {
         this.day = day;
     }
 
+    /**
+     * Method to get the day of a week from a ResDate
+     * @return dayIndex Monday=1,Tuesday=2,...,Sunday=7
+     */
     public int getDayOfWeek(){
-        //convert it to a local date
-        //find day of year
-        //if mondya day = 0 etc
+        
         LocalDate date = LocalDate.of(year,month,day);
-       date.getDayOfWeek();
-       //returns an enumerated type 
-       //Fix??
-       return 1;
+       int dayIndex = date.getDayOfWeek().getValue();
+      
+       return dayIndex;
         
     }
     /**
@@ -89,6 +90,17 @@ public class ResDate {
     public int getDay() {
         return day;
     }
+    /**
+     * Method that converts a ResDate to a LocalDate,
+     * allows us to use some of the localDate methods
+     * @return date
+     */
+    public LocalDate convertToLocal(){
+        LocalDate date = LocalDate.of(year,month,day);
+        return date;
+        
+    }
+    
 
     /**
      * Returns a string representation of a string
@@ -133,6 +145,16 @@ class TestResDate {
             System.out.println("Test 2 Passed");
         } else {
             System.out.println("Test 2 Failed");
+        }
+         /*
+        Test 3
+        Testingthe getDayOfWeek() 
+         */
+        ResDate date2 = new ResDate("29/11/2021");
+        if (date2.getDayOfWeek()  == 1) {
+            System.out.println("Test 3 Passed");
+        } else {
+            System.out.println("Test 3 Failed");
         }
 
     }
