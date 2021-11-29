@@ -34,6 +34,25 @@ public class ReadFile {
         input.close();
         return temp;
     }
+    
+    
+     public String[][] ExampleReservations() throws FileNotFoundException {
+        //NOTE: make sure you put the file l4Hotels.csv in the netBeans project
+        //folder for this project so it can be found
+        java.io.File file = new java.io.File("ExampleReservations.csv");
+        Scanner input = new Scanner(file);
+        
+        String line;
+        this.temp = new String[9][9];
+        int i = 0;
+        while (input.hasNext()) {
+            line = input.nextLine();
+            this.temp[i] = line.split(",");
+            i++;
+        }
+        input.close();
+        return temp;
+    }
 
 }
 
