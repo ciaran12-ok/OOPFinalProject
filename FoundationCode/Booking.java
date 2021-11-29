@@ -18,8 +18,8 @@ public class Booking {
     private ResDate checkOut;
     private double bookingCost;
     //allows one customer to book several different rooms for different amounts of people
-    private Reservation[] roomsToBook;
-    private static ArrayList<String> numbersUsed;
+    private Reservation[] roomsToReserve;
+    private Room[] roomsToBook;
 
     /**
      * No arg constructor that creates a unique reservation number for each
@@ -34,11 +34,39 @@ public class Booking {
         this.reservationNumber = rNum;
     }
 
-    public Reservation[] getRoomsToBook() {
+    /**
+     * Returns an array of reservations
+     *
+     * @return
+     */
+    public Reservation[] getRoomsToReserve() {
+        return roomsToReserve;
+    }
+
+    /**
+     * Sets the rooms to be reserved
+     *
+     * @param roomsToReserve
+     */
+    public void setRoomsToReserve(Reservation[] roomsToReserve) {
+        this.roomsToReserve = roomsToReserve;
+    }
+
+    /**
+     * Returns a room array of rooms that are booked for a reservation
+     *
+     * @return
+     */
+    public Room[] getRoomsToBook() {
         return roomsToBook;
     }
 
-    public void setRoomsToBook(Reservation[] roomsToBook) {
+    /**
+     * Sets the room to be booked
+     *
+     * @param roomsToBook
+     */
+    public void setRoomsToBook(Room[] roomsToBook) {
         this.roomsToBook = roomsToBook;
     }
 
@@ -60,6 +88,12 @@ public class Booking {
         this.rType = rType;
     }
 
+    /**
+     * Method that makes a new reservation number if the one already created is
+     * not unique
+     *
+     * @return
+     */
     public String setNewReservationNumber() {
         Random rng = new Random();
         int rNumber = 100000 + rng.nextInt(1000000);
@@ -68,30 +102,65 @@ public class Booking {
         return rNum;
     }
 
+    /**
+     * Returns the reservation number
+     *
+     * @return
+     */
     public String getReservationNumber() {
         return reservationNumber;
     }
 
+    /**
+     * Gets the reservation name
+     *
+     * @return
+     */
     public String getReservationName() {
         return reservationName;
     }
 
+    /**
+     * Sets the reservation name
+     *
+     * @param reservationName
+     */
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
     }
 
+    /**
+     * Gets the check in date
+     *
+     * @return
+     */
     public ResDate getCheckIn() {
         return checkIn;
     }
 
+    /**
+     * Sets the check in date
+     *
+     * @param checkIn
+     */
     public void setCheckIn(ResDate checkIn) {
         this.checkIn = checkIn;
     }
 
+    /**
+     * Gets the check out date
+     *
+     * @return
+     */
     public ResDate getCheckOut() {
         return checkOut;
     }
 
+    /**
+     * Sets the check out date
+     *
+     * @param checkOut
+     */
     public void setCheckOut(ResDate checkOut) {
         this.checkOut = checkOut;
     }
@@ -103,7 +172,7 @@ public class Booking {
      */
     public void bookRooms(Calender calender) {
 
-        for (Reservation r : roomsToBook) {
+        for (Reservation r : roomsToReserve) {
             String roomType = r.getRoomType();
             int occupancy = r.getRoomOccupancy();
             Reservation res = new Reservation(reservationNumber, reservationName, rType, checkIn, checkOut, roomType, occupancy);
@@ -123,12 +192,14 @@ public class Booking {
 
         double totalCost = 0;
         double discount = rType.getDiscount();
-        for (Reservation res : c.getReservations()) {
-            if (res.getReservationNumber().equals(reservationNumber)) {
-                totalCost += res.getCostReservation();
-            }
+        Reservation[] res = c.findBooking(reservationNumber);
 
+        for (int i = 0; i < roomsToBook.length; i++) {
+            Room room = roomsToBook[i];
+
+            totalCost += res[i].getCostReservation(room);
         }
+
         bookingCost = totalCost - totalCost * discount;
         return totalCost;
     }
@@ -159,9 +230,9 @@ public class Booking {
     public String diplayBooking() {
         String booking = "\nReservation name: " + reservationName + "\nReservation type: "
                 + "\nCheck in date: " + checkIn + "\nCheck out date: " + checkOut + "\nNumber of rooms booked: "
-                + roomsToBook.length;
+                + roomsToReserve.length;
         String rooms = "Rooms: ";
-        for (Reservation r : roomsToBook) {
+        for (Reservation r : roomsToReserve) {
             String roomType = r.getRoomType();
             int occupancy = r.getRoomOccupancy();
             rooms += "Room type: " + roomType + " Occupancy: " + occupancy;
