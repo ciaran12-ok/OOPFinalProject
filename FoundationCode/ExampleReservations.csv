@@ -1,0 +1,9 @@
+hotelType,reservationNumber,reservationName,reservationType,checkIn,checkOut,roomType,roomOccupancy,reservationCost
+5,123,Orla,AP,10/11/2021,11/11/2021,Deluxe Double,1,300
+5,2222,Orla,S,11/11/2021,15/11/2021,Deluxe Single,1,300
+4,1211,Orla,AP,12/11/2021,20/11/2021,xecutive Double,2,800
+5,122,Orla,S,13/11/2021,17/11/2021,Deluxe Single,1,300
+3,123,Orla,S,14/11/2021,16/11/2021,Classic Single,1,400
+3,222,Orla,AP,15/11/2021,19/11/2021,Classic Double,2,300
+5,123,Orla,AP,16/11/2021,20/11/2021,Deluxe Twin,1,900
+4,333,Orla,S,17/11/2021,21/11/2021,Executive Single,2,300
