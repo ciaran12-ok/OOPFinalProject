@@ -4,13 +4,10 @@
  * @author ciaranokeeffe
  * @author Orla
  */
-
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class RoomMenu {
@@ -95,13 +92,39 @@ public class RoomMenu {
                     System.out.println("Please select a reservation type: ");
                     System.out.println("Enter AP for Advanced Purchase put info for AP");
                     System.out.println("Enter S for Standard Purchase put info for S");
+
                     String rTy = in.next();
+                    //Checks the user enters the correct reservation type
+                    boolean acceptableType = false;
+
+                    while (acceptableType == false) {
+
+                        if (rTy.equals("S") || rTy.equals("s")) {
+                            acceptableType = true;
+                        }
+                        if (rTy.equals("AP") || rTy.equals("ap")) {
+                            acceptableType = true;
+                        } else {
+                            System.out.println("Please enter a valid reservation type.");
+                            rTy = in.next();
+                            acceptableType = false;
+                        }
+                    }
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
 
                     System.out.println("Please enter your check in date in the format dd/mm/yyyy");
                     String checkIn = in.next();
-                    ResDate rIn = new ResDate(checkIn);
+                    
+                    //handle errors from here
+                    try {
+                        ResDate rIn = new ResDate(checkIn);
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                        checkIn = in.next();
+                        //throws NumberFormatException;
+                    }
+
                     LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
                     System.out.println("Check in date is: " + checkIn);
                     booking.setCheckIn(rIn);
@@ -230,7 +253,7 @@ public class RoomMenu {
                     }
 
                     System.out.println("Your booking information: ");
-                    System.out.println(booking.diplayBooking());
+                    // System.out.println(booking.diplayBooking());
                     System.out.println("1) Confirm \n2) Cancel");
                     int confirm = in.nextInt();
                     if (confirm == 1) {
@@ -345,6 +368,7 @@ public class RoomMenu {
                     }
 
                 }
+
                 if (command1 == 0) {
                     System.exit(0);
                 }
@@ -373,6 +397,13 @@ public class RoomMenu {
                 System.exit(0);
             }
         }
+        try {
+
+            calender.writeFile();
+        } catch (IOException ex) {
+            System.err.println("Error writing out calender");
+        }
+
     }
 
 }
