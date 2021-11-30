@@ -138,6 +138,11 @@ public class RoomMenu {
                     if (confirm == 1) {
                         booking.bookRooms(calender);
                         //add to the csv files for reservations
+                        try{
+                        calender.writeFile();
+                        }catch(IOException e){
+                            System.err.println("The calender object does not exist");
+                        }
                         //show booking number and ask them tp save it for proof
                         System.out.println("Thank you for choosing to stay with us.\n"
                                 + "Your booking number is: " + booking.getReservationNumber());
@@ -238,6 +243,11 @@ public class RoomMenu {
                     if (confirm == 1) {
                         booking.bookRooms(calender);
                         //add to the csv files for reservations
+                        try{
+                        calender.writeFile();
+                        }catch(IOException e){
+                            System.err.println("The calender object does not exist");
+                        }
                         //show booking number and ask them tp save it for proof
                         System.out.println("Thank you for choosing to stay with us.\n"
                                 + "Your booking number is: " + booking.getReservationNumber());
@@ -338,6 +348,11 @@ public class RoomMenu {
                     if (confirm == 1) {
                         booking.bookRooms(calender);
                         //add to the csv files for reservations
+                        try{
+                        calender.writeFile();
+                        }catch(IOException e){
+                            System.err.println("The calender object does not exist");
+                        }
                         //show booking number and ask them tp save it for proof
                         System.out.println("Thank you for choosing to stay with us.\n"
                                 + "Your booking number is: " + booking.getReservationNumber());
