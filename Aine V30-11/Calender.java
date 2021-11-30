@@ -25,6 +25,16 @@ public class Calender {
         reservations = new ArrayList<Reservation>();
         reservationNumbers = new ArrayList<String>();
     }
+    /**
+     * Method that get todays date
+     * 
+     * @return Date
+     * @author Aine
+     */
+    public Date todaysDate(){
+        Date today = Calendar.getInstance().getTime();
+        return today;
+    }
 
     /**
      * Adds a booking to the calender
