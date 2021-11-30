@@ -11,6 +11,7 @@ public class Calender {
 
     private ArrayList<Reservation> reservations;
     private Reservation r1;
+    private int noOfRemove = 0;
 
     //Used only for the find booking method
     private ArrayList<String> reservationNumbers;
@@ -34,19 +35,26 @@ public class Calender {
     }
 
     /**
-     * Removes a booking from a calender
+     * Removes a booking from a calender and sets every element above removed element
+     * to 1-previous value
      *
      * @param r
      */
     public void removeReservation(Reservation res) {
+        
         int tempRes;
         tempRes = Integer.parseInt(res.getReservationNumber());
-        for (tempRes = Integer.parseInt(res.getReservationNumber()); tempRes<= reservationNumbers.size(); tempRes++ ){
+        for (tempRes = Integer.parseInt(res.getReservationNumber()); tempRes< reservationNumbers.size(); tempRes++ ){
             
-            reservationNumbers.set(tempRes+1, String.valueOf(tempRes));
+            reservationNumbers.set(tempRes, String.valueOf(tempRes));
+            Reservation newRes = reservations.get(tempRes);
+            newRes.setReservationNumber(String.valueOf(tempRes));
+           
+            reservations.set(tempRes, newRes);
         }
         reservations.remove(res);
         reservationNumbers.remove(res.getReservationNumber());
+        noOfRemove++;
     }
 
     /**
@@ -95,16 +103,28 @@ public class Calender {
     */
     
     
+    
+    
+    /**
+     * 
+     * @param reservationNumber
+     * @return 
+     */
+    
     public Reservation lookBooking(String reservationNumber) {
-
+        
+        
         ArrayList<Integer> index = new ArrayList<Integer>();
-        //Reservation r1
+        //If arrayList doesn't contain number print
         if(!reservationNumbers.contains(reservationNumber)){
           System.out.print("Invalid");
         }
+        
+        //Sets r1 to new element
+        r1 = reservations.get(Integer.parseInt(reservationNumber)-1);
         System.out.println(reservations.get(Integer.parseInt(reservationNumber) -1));
-        //System.out.print(reservations);
-        //Reservation r = new Reservation (reservations.get(Integer.parseInt(reservationNumber) -1));
+        System.out.println(reservationNumbers.toString());
+  
         return r1;
     }
 }

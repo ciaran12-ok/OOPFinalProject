@@ -69,5 +69,7 @@ public class TestCalendar {
 
         
         Reservation r2 = myCalender.lookBooking("1");
+        Reservation r3 = myCalender.lookBooking("4");
+        
     }
 }

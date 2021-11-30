@@ -94,6 +94,10 @@ public class Reservation {
         return reservationNumber;
     }
 
+    public void setReservationNumber(String reservationNumber) {
+        this.reservationNumber = reservationNumber;
+    }
+
     /**
      * Method that gets the reservation name
      *

@@ -197,12 +197,12 @@ public class Booking {
 
         double totalCost = 0;
         double discount = rType.getDiscount();
-        Reservation[] res = c.findBooking(reservationNumber);
+        Reservation res = c.lookBooking(reservationNumber);
 
         for (int i = 0; i < roomsToBook.length; i++) {
             Room room = roomsToBook[i];
 
-            totalCost += res[i].getCostReservation(room);
+            totalCost += res.getCostReservation(room);
         }
 
         bookingCost = totalCost - totalCost * discount;
