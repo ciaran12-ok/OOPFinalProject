@@ -1,8 +1,8 @@
-
 /**
  *
  * @author ciaranokeeffe
  * @author Orla
+ * @author Nabel 
  */
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -116,26 +116,33 @@ public class RoomMenu {
                     System.out.println("Please enter your check in date in the format dd/mm/yyyy");
                     String checkIn = in.next();
                     
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkOut = in.next();
+                    
                     //handle errors from here
                     try {
-                        ResDate rIn = new ResDate(checkIn);
+                        ResDate rOut = new ResDate(checkOut);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    checkOut = in.next();
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out date is: " + checkOut);
+                    booking.setCheckOut(rOut);
                     } catch (NumberFormatException ex) {
-                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                        //throws NumberFormatException;
-                    }
-
-                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                        throw new NumberFormatException("Please use the date format dd/mm/yyyy");
+                        }
+                    
+                    try {
+                        ResDate rIn = new ResDate(checkIn);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    checkIn = in.next();
+                    LocalDate localRIn = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
                     System.out.println("Check in date is: " + checkIn);
                     booking.setCheckIn(rIn);
-
-                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
-                    String checkOut = in.next();
-                    ResDate rOut = new ResDate(checkOut);
-                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
-                    System.out.println("Check out is: " + checkOut);
-                    booking.setCheckOut(rIn);
-
+                        
+                    }catch (NumberFormatException ex){
+                        throw new NumberFormatException("Please use the date format dd/mm/yyyy");
+                        }
+                    
                     //Check if the booking number is unique before confirmation
                     //And change it if it's not
                     String bookingNum = booking.getReservationNumber();
@@ -217,24 +224,56 @@ public class RoomMenu {
                     System.out.println("Please select a reservation type: ");
                     System.out.println("Enter AP for Advanced Purchase put info for AP");
                     System.out.println("Enter S for Standard Purchase put info for S");
+                   
                     String rTy = in.next();
+                    //Checks the user enters the correct reservation type
+                    boolean acceptableType = false;
+
+                    while (acceptableType == false) {
+
+                        if (rTy.equals("S") || rTy.equals("s")) {
+                            acceptableType = true;
+                        }
+                        if (rTy.equals("AP") || rTy.equals("ap")) {
+                            acceptableType = true;
+                        } else {
+                            System.out.println("Please enter a valid reservation type.");
+                            rTy = in.next();
+                            acceptableType = false;
+                        }
+                    }
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
-
+                    
                     System.out.println("Please enter your check in date in the format dd/mm/yyyy");
                     String checkIn = in.next();
-                    ResDate rIn = new ResDate(checkIn);
-                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                    
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkOut = in.next();
+                    
+                    try {
+                        ResDate rOut = new ResDate(checkOut);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    checkOut = in.next();
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out date is: " + checkOut);
+                    booking.setCheckOut(rOut);
+                    } catch (NumberFormatException ex) {
+                        throw new NumberFormatException("Please use the date format dd/mm/yyyy");
+                        }
+                    
+                    try {
+                        ResDate rIn = new ResDate(checkIn);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    checkIn = in.next();
+                    LocalDate localRIn = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
                     System.out.println("Check in date is: " + checkIn);
                     booking.setCheckIn(rIn);
-
-                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
-                    String checkOut = in.next();
-                    ResDate rOut = new ResDate(checkOut);
-                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
-                    System.out.println("Check out is: " + checkOut);
-                    booking.setCheckOut(rIn);
-
+                        
+                    }catch (NumberFormatException ex){
+                        throw new NumberFormatException("Please use the date format dd/mm/yyyy");
+                        }
+                    
                     //Check if the booking number is unique before confirmation
                     //And change it if it's not
                     String bookingNum = booking.getReservationNumber();
@@ -316,23 +355,55 @@ public class RoomMenu {
                     System.out.println("Please select a reservation type: ");
                     System.out.println("Enter AP for Advanced Purchase put info for AP");
                     System.out.println("Enter S for Standard Purchase put info for S");
+                    
                     String rTy = in.next();
+                    //Checks the user enters the correct reservation type
+                    boolean acceptableType = false;
+
+                    while (acceptableType == false) {
+
+                        if (rTy.equals("S") || rTy.equals("s")) {
+                            acceptableType = true;
+                        }
+                        if (rTy.equals("AP") || rTy.equals("ap")) {
+                            acceptableType = true;
+                        } else {
+                            System.out.println("Please enter a valid reservation type.");
+                            rTy = in.next();
+                            acceptableType = false;
+                        }
+                    }
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
 
                     System.out.println("Please enter your check in date in the format dd/mm/yyyy");
                     String checkIn = in.next();
-                    ResDate rIn = new ResDate(checkIn);
-                    LocalDate localRin = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                    
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkOut = in.next();
+                    
+                    try {
+                        ResDate rOut = new ResDate(checkOut);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    checkOut = in.next();
+                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                    System.out.println("Check out date is: " + checkOut);
+                    booking.setCheckOut(rOut);
+                    } catch (NumberFormatException ex) {
+                        throw new NumberFormatException("Please use the date format dd/mm/yyyy");
+                        }
+                    
+                    try {
+                        ResDate rIn = new ResDate(checkIn);
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    checkIn = in.next();
+                    LocalDate localRIn = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
                     System.out.println("Check in date is: " + checkIn);
                     booking.setCheckIn(rIn);
-
-                    System.out.println("Please enter your check out date in the format of dd/mm/yyyy");
-                    String checkOut = in.next();
-                    ResDate rOut = new ResDate(checkOut);
-                    LocalDate localROut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
-                    System.out.println("Check out is: " + checkOut);
-                    booking.setCheckOut(rIn);
+                        
+                    }catch (NumberFormatException ex){
+                        throw new NumberFormatException("Please use the date format dd/mm/yyyy");
+                        }
 
                     //Check if the booking number is unique before confirmation
                     //And change it if it's not
@@ -397,6 +468,7 @@ public class RoomMenu {
                 System.exit(0);
             }
         }
+        
         try {
 
             calender.writeFile();
