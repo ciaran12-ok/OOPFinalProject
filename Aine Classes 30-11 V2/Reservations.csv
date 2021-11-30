@@ -1,0 +1,5 @@
+Reservation Number, Reservation Name, Reservation Type,Check In, Check Out, Room Type, Room Occupancy, Number of Stars
+2023,John,AP,20/11/2021,23/11/2021,Single,1,5,
+2033,Mary,S,19/11/2021,25/11/2021,Double,2,4,
+2023,John,S,21/11/2021,23/11/2021,Single,1,3,
+2023,John,S,22/11/2013,24/11/2013,Single,2,4,
