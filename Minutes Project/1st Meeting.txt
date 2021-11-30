@@ -1,0 +1,7 @@
+First Meeting  05/11/2021
+Minutes
+•	Everyone was in attendance
+•	We set the GitHub repository and added everyone to it
+•	We agreed on what times would suit everyone to meet up each week and what we were aiming to achieve 
+•	We talked about possible classes and started to create basic UML diagrams
+•	We all agreed to brainstorm more classes over the weekend and come back and compare 
