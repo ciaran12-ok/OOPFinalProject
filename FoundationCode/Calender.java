@@ -1,85 +1,118 @@
 
+import java.util.ArrayList;
+
 /**
+ * A class to represent a Calender that holds reservations
  *
  * @author Nabel Sodipe
  * @date 13/11/2021
  */
-import java.time.LocalDate;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.ArrayList;
-
 public class Calender {
 
-    private Date checkinDate;
-    private Date checkoutDate;
     private ArrayList<Reservation> reservations;
+    private Reservation r1;
 
-    public void Calender() {
-        reservations = new ArrayList<>();
-    }
+    //Used only for the find booking method
+    private ArrayList<String> reservationNumbers;
 
-    // getInstance() gets a calander using the specified time zone 
-    // we set the the default Dates to a certain date e.g. 2021/11/17
-    public final void SetReservationDates(int DaysFromNow, int Stay) {
-        Calendar ref = Calendar.getInstance();
-        ref.set(ref.get(Calendar.YEAR),
-                ref.get(Calendar.MONTH),
-                ref.get(Calendar.DAY_OF_MONTH)
-                + DaysFromNow, 2021, 11, 17);
-
-        checkinDate = ref.getTime();
-
-        ref.add(Calendar.DAY_OF_MONTH, Stay);
-
-        checkoutDate = ref.getTime();
-    }
-
-    public Date getCheckinDate() {
-        return checkinDate;
-    }
-
-    public Date getCheckoutDate() {
-        return checkoutDate;
-    }
-
-    public void setCheckinDate(Date checkinDate) {
-        this.checkinDate = checkinDate;
-    }
-
-    public void setCheckoutDate(Date checkoutDate) {
-        this.checkoutDate = checkoutDate;
+    /**
+     * No arg constructor that creates a calender
+     */
+    public Calender() {
+        reservations = new ArrayList<Reservation>();
+        reservationNumbers = new ArrayList<String>();
     }
 
     /**
      * Adds a booking to the calender
-     * @param r 
+     *
+     * @param r
      */
     public void addToCalender(Reservation r) {
         reservations.add(r);
+        reservationNumbers.add(r.getReservationNumber());
     }
 
-    
-    
     /**
-     * Removes a booking form a calender
-     * @param r 
+     * Removes a booking from a calender
+     *
+     * @param r
      */
-    public void removeBooking(Reservation r) {
-        for (Reservation res : reservations) {
-            if (res.equals(r)) {
-                reservations.remove(res);
-            }
+    public void removeReservation(Reservation res) {
+        int tempRes;
+        tempRes = Integer.parseInt(res.getReservationNumber());
+        for (tempRes = Integer.parseInt(res.getReservationNumber()); tempRes<= reservationNumbers.size(); tempRes++ ){
+            
+            reservationNumbers.set(tempRes+1, String.valueOf(tempRes));
         }
-
+        reservations.remove(res);
+        reservationNumbers.remove(res.getReservationNumber());
     }
-/**
- * Returns the array list of reservations
- * @return 
- */
+
+    /**
+     * Returns the array list of reservations
+     *
+     * @return
+     */
     public ArrayList<Reservation> getReservations() {
         return reservations;
     }
 
+    public ArrayList<String> getReservationNumbers() {
+        return reservationNumbers;
+    }
+
+    /**
+     * Method that finds a booking and all it's reservations based off it's
+     * reservation number
+     *
+     * @param reservationNumber
+     * @return an array of reservations under a booking
+     */
+    
+    
+    /*
+    public Reservation[] findBooking(String reservationNumber) {
+
+        ArrayList<Integer> index = new ArrayList<>();
+        if (reservationNumbers.contains(reservationNumber)) {
+            for (String resNumbers : reservationNumbers) {
+                if (resNumbers.equals(reservationNumber)) {
+                    index.add(reservationNumbers.indexOf(resNumbers));
+                }
+            }
+        } else {
+            System.out.println("Invalid reservation number, please try again.");
+        }
+
+        Reservation[] reservationsFound = new Reservation[index.size()];
+        for (Integer in : index) {
+            reservationsFound[in.intValue()] = reservations.get(in.intValue());
+        }
+
+        return  reservationsFound;
+    }
+    */
+    
+    
+    public Reservation lookBooking(String reservationNumber) {
+
+        ArrayList<Integer> index = new ArrayList<Integer>();
+        //Reservation r1
+        if(!reservationNumbers.contains(reservationNumber)){
+          System.out.print("Invalid");
+        }
+        System.out.println(reservations.get(Integer.parseInt(reservationNumber) -1));
+        //System.out.print(reservations);
+        //Reservation r = new Reservation (reservations.get(Integer.parseInt(reservationNumber) -1));
+        return r1;
+    }
 }
+
+    /**
+     * Class to test that the Calender class is working as expected
+     *
+     * @author Orla
+     * @version 28/11/2021
+     */
+    
