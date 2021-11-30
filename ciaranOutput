@@ -1,0 +1,214 @@
+cd /Users/ciaranokeeffe/Documents/Semester 3/Object Orientated Programming/Labs/Orlanew; JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home "/Applications/NetBeans/Apache NetBeans 12.4.app/Contents/Resources/NetBeans/netbeans/java/maven/bin/mvn" -Dexec.vmArgs= "-Dexec.args=${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}" -Dexec.executable=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java -Dexec.mainClass=ReservationSystem -Dexec.classpathScope=runtime -Dexec.appArgs= org.codehaus.mojo:exec-maven-plugin:3.0.0:exec
+Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
+Scanning for projects...
+
+------------------------< org.openjfx:Orlanew >-------------------------
+Building Orlanew 1.0-SNAPSHOT
+--------------------------------[ jar ]---------------------------------
+
+--- exec-maven-plugin:3.0.0:exec (default-cli) @ Orlanew ---
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+1
+Welcome to the reservation system.
+What type of Hotel would you like to stay in?
+1) 5-STAR  2) 4-STAR 3) 3-STAR 0) Exit
+1
+How many rooms would you like to book:
+1
+ 
+Room number:1
+What type of room would you like to book:
+0) Room; Type:Deluxe Double
+1) Room; Type:Deluxe Twin
+2) Room; Type:Deluxe Single
+3) Room; Type:Deluxe Family
+2
+For how many people: 
+2
+Please enter your name: 
+ciaran
+Please select a reservation type: 
+Enter AP for Advanced Purchase put info for AP
+Enter S for Standard Purchase put info for S
+s
+Please enter your check in date in the format dd/mm/yyyy
+12/12/2021
+Check in date is: 12/12/2021
+Please enter your check out date in the format of dd/mm/yyyy
+13/12/2021
+Check out is: 13/12/2021
+Your booking information: 
+
+Reservation name: ciaran
+Reservation type: ReservationType: S
+Check in date: 12/12/2021
+Check out date: 13/12/2021
+Number of rooms booked: 1Rooms: Room type: Deluxe Single Occupancy: 2
+Total Cost: 65.0
+1) Confirm 
+2) Cancel
+1
+Thank you for choosing to stay with us.
+Your booking number is: 0
+Please keep this number as proof of purchase
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+1
+Welcome to the reservation system.
+What type of Hotel would you like to stay in?
+1) 5-STAR  2) 4-STAR 3) 3-STAR 0) Exit
+2
+How many rooms would you like to book:
+2
+ 
+Room number:1
+What type of room would you like to book:
+0) Room; Type:Executive Double
+1) Room; Type:Executive Twin
+2) Room; Type:Executive Single
+2
+For how many people: 
+1
+ 
+Room number:2
+What type of room would you like to book:
+0) Room; Type:Executive Double
+1) Room; Type:Executive Twin
+2) Room; Type:Executive Single
+1
+For how many people: 
+2
+Please enter your name: 
+sam
+Please select a reservation type: 
+Enter AP for Advanced Purchase put info for AP
+Enter S for Standard Purchase put info for S
+ap
+Please enter your check in date in the format dd/mm/yyyy
+15/12/2021
+Check in date is: 15/12/2021
+Please enter your check out date in the format of dd/mm/yyyy
+18/12/2021
+Check out is: 18/12/2021
+Your booking information: 
+
+Reservation name: sam
+Reservation type: ReservationType: AP
+Check in date: 15/12/2021
+Check out date: 18/12/2021
+Number of rooms booked: 2Rooms: Room type: Executive Single Occupancy: 1Room type: Executive Twin Occupancy: 2
+Total Cost: 156.75
+1) Confirm 
+2) Cancel
+1
+Thank you for choosing to stay with us.
+Your booking number is: 0
+Please keep this number as proof of purchase
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+1
+Welcome to the reservation system.
+What type of Hotel would you like to stay in?
+1) 5-STAR  2) 4-STAR 3) 3-STAR 0) Exit
+1
+How many rooms would you like to book:
+1
+ 
+Room number:1
+What type of room would you like to book:
+0) Room; Type:Deluxe Double
+1) Room; Type:Deluxe Twin
+2) Room; Type:Deluxe Single
+3) Room; Type:Deluxe Family
+1
+For how many people: 
+1
+Please enter your name: 
+Peter
+Please select a reservation type: 
+Enter AP for Advanced Purchase put info for AP
+Enter S for Standard Purchase put info for S
+s
+Please enter your check in date in the format dd/mm/yyyy
+12/12/2021
+Check in date is: 12/12/2021
+Please enter your check out date in the format of dd/mm/yyyy
+15/12/2021
+Check out is: 15/12/2021
+Your booking information: 
+
+Reservation name: Peter
+Reservation type: ReservationType: S
+Check in date: 12/12/2021
+Check out date: 15/12/2021
+Number of rooms booked: 1Rooms: Room type: Deluxe Twin Occupancy: 1
+Total Cost: 75.0
+1) Confirm 
+2) Cancel
+1
+Thank you for choosing to stay with us.
+Your booking number is: 0
+Please keep this number as proof of purchase
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+2
+Please enter your reservation number: 
+0
+Reservation; reservationNumber:0, reservationName:ciaran, rType:ReservationType: S, checkIn:12/12/2021, checkOut:13/12/2021, roomType:Rooms: Room type: Deluxe Single Occupancy: 2, roomOccupancy:2
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+2
+Please enter your reservation number: 
+1
+InvalidReservation; reservationNumber:0, reservationName:ciaran, rType:ReservationType: S, checkIn:12/12/2021, checkOut:13/12/2021, roomType:Deluxe Single, roomOccupancy:2
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+3
+Todays Date is: 2021-11-30
+[0, 0, 0, 0, 0, 0, 0]
+Please enter your reservation number: 
+0
+You are due a full refund of: 75.0
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
+3
+Todays Date is: 2021-11-30
+[1, 2, 3, 4, 5, 6]
+Please enter your reservation number: 
+1
+You are due a full refund of: 75.0
+Welcome our Hotel system. 
+What would you like to do today?
+1) Make a reservation 
+2) View a reservation 
+3) Cancel a reservation
+0) Exit
