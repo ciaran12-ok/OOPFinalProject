@@ -46,6 +46,34 @@ public class RoomMenu {
 
                 // 5-Star Hotel Choice tree
                 if (command1 == 1) {
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = null;
+                    ResDate rIn = new ResDate();
+                    try {
+                        checkIn = in.next();
+                        rIn = new ResDate(checkIn);
+
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                        checkIn = in.next();
+                    }
+                    System.out.println("Check in date is: " + checkIn);
+                    booking.setCheckIn(new ResDate(checkIn));
+
+                    System.out.println("Please enter your check out date in the format dd/mm/yyyy");
+
+                    String checkOut = null;
+                    ResDate rOut = new ResDate();
+                    try {
+                        checkOut = in.next();
+                        rOut = new ResDate(checkOut);
+
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println("Please enter your check out date in the format dd/mm/yyyy");
+                        checkOut = in.next();
+                    }
+                    System.out.println("Check out date is: " + checkOut);
+                    booking.setCheckIn(new ResDate(checkOut));
 
                     System.out.println("How many rooms would you like to book:");
                     int numOfRooms = in.nextInt();
@@ -74,6 +102,41 @@ public class RoomMenu {
                         String roomType = room.getType();
                         reservation.setRoomType(roomType);
 
+                        //Check booked out, get new info if it is booked out
+                        LocalDate dayIn = LocalDate.of(rIn.getYear(),rIn.getMonth(),rIn.getDay());
+                        int dayOfYearIn = dayIn.getDayOfYear();
+
+                        LocalDate dayOut = LocalDate.of(rOut.getYear(),rOut.getMonth(),rOut.getDay());
+                        int dayOfYearOut = dayOut.getDayOfYear();
+
+                        boolean bookedOut = false;
+                        for (int k = 0; k < dayOfYearOut - dayOfYearIn; k++) {
+                            LocalDate dateCheck = dayIn.plusDays(k);
+                            ResDate dateChck = new ResDate(dateCheck.getDayOfMonth(),
+                                    dateCheck.getMonthValue(), dateCheck.getYear());
+
+                            int countReservations = calender.reservationsOnDayForRoomType(dateChck, room);
+                            if (countReservations >= room.getNoOfRooms()) {
+                                bookedOut = true;
+                            }
+                        }
+                        if (bookedOut == true) {
+                            System.out.println("That room is booked out for your specified dates, please choose another room.");
+                            System.out.println(" ");
+                            System.out.println("Room number:" + (i + 1));
+
+                            System.out.println("What type of room would you like to book:");
+
+                            for (String r : rooms) {
+                                System.out.println(r);
+                            }
+                            roomIndex = in.nextInt();
+
+                            room = roomArray[roomIndex];
+                            roomType = room.getType();
+                            reservation.setRoomType(roomType);
+
+                        }
                         System.out.println("For how many people: ");
                         int occupancy = in.nextInt();
                         while (occupancy > room.getMax()) {
@@ -114,35 +177,6 @@ public class RoomMenu {
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
 
-                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                    String checkIn;
-                    ResDate rIn;
-                    try {
-                        checkIn = in.next();
-                        rIn = new ResDate(checkIn);
-                        System.out.println("Check in date is: " + checkIn);
-                        booking.setCheckIn(rIn);
-
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                    }
-
-                    System.out.println("Please enter your check out date in the format dd/mm/yyyy");
-
-                    String checkOut;
-                    ResDate rOut;
-                    try {
-                        checkOut = in.next();
-                        rOut = new ResDate(checkOut);
-                        System.out.println("Check out date is: " + checkOut);
-                        booking.setCheckIn(rOut);
-
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Please enter your check out date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                    }
-
                     //Check if the booking number is unique before confirmation
                     //And change it if it's not
                     String bookingNum = booking.getReservationNumber();
@@ -180,9 +214,39 @@ public class RoomMenu {
                 //4 Star hotel tree
                 if (command1 == 2) {
 
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = null;
+                    ResDate rIn = new ResDate();
+                    try {
+                        checkIn = in.next();
+                        rIn = new ResDate(checkIn);
+
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                        checkIn = in.next();
+                    }
+                    System.out.println("Check in date is: " + checkIn);
+                    booking.setCheckIn(new ResDate(checkIn));
+
+                    System.out.println("Please enter your check out date in the format dd/mm/yyyy");
+
+                    String checkOut = null;
+                    ResDate rOut = new ResDate();
+                    try {
+                        checkOut = in.next();
+                        rOut = new ResDate(checkOut);
+
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println("Please enter your check out date in the format dd/mm/yyyy");
+                        checkOut = in.next();
+                    }
+                    System.out.println("Check out date is: " + checkOut);
+                    booking.setCheckIn(new ResDate(checkOut));
+
                     System.out.println("How many rooms would you like to book:");
                     int numOfRooms = in.nextInt();
-                    Reservation[] roomsToBeBooked = new Reservation[numOfRooms];
+                    Reservation[] roomsToBeReserved = new Reservation[numOfRooms];
+                    Room[] roomsToBeBooked = new Room[numOfRooms];
 
                     //Takes in each room that they want to book and it's details
                     //Adds it to a roomsToBeBooked array
@@ -201,11 +265,46 @@ public class RoomMenu {
                         }
                         int roomIndex = in.nextInt();
                         Room[] roomArray = hotel4.getRoomsAvailable();
-                        //Problem
+
                         Room room = roomArray[roomIndex];
                         String roomType = room.getType();
                         reservation.setRoomType(roomType);
 
+                        //Check booked out, get new info if it is booked out
+                        LocalDate dayIn = LocalDate.of(rIn.getYear(),rIn.getMonth(),rIn.getDay());
+                        int dayOfYearIn = dayIn.getDayOfYear();
+
+                        LocalDate dayOut = LocalDate.of(rOut.getYear(),rOut.getMonth(),rOut.getDay());
+                        int dayOfYearOut = dayOut.getDayOfYear();
+
+                        boolean bookedOut = false;
+                        for (int k = 0; k < dayOfYearOut - dayOfYearIn; k++) {
+                            LocalDate dateCheck = dayIn.plusDays(k);
+                            ResDate dateChck = new ResDate(dateCheck.getDayOfMonth(),
+                                    dateCheck.getMonthValue(), dateCheck.getYear());
+
+                            int countReservations = calender.reservationsOnDayForRoomType(dateChck, room);
+                            if (countReservations >= room.getNoOfRooms()) {
+                                bookedOut = true;
+                            }
+                        }
+                        if (bookedOut == true) {
+                            System.out.println("That room is booked out for your specified dates, please choose another room.");
+                            System.out.println(" ");
+                            System.out.println("Room number:" + (i + 1));
+
+                            System.out.println("What type of room would you like to book:");
+
+                            for (String r : rooms) {
+                                System.out.println(r);
+                            }
+                            roomIndex = in.nextInt();
+
+                            room = roomArray[roomIndex];
+                            roomType = room.getType();
+                            reservation.setRoomType(roomType);
+
+                        }
                         System.out.println("For how many people: ");
                         int occupancy = in.nextInt();
                         while (occupancy > room.getMax()) {
@@ -214,10 +313,12 @@ public class RoomMenu {
                             occupancy = in.nextInt();
                         }
                         reservation.setRoomOccupancy(occupancy);
-
-                        roomsToBeBooked[i] = reservation;
+                        roomsToBeBooked[i] = room;
+                        roomsToBeReserved[i] = reservation;
 
                     }
+                    booking.setRoomsToBook(roomsToBeBooked);
+                    booking.setRoomsToReserve(roomsToBeReserved);
                     System.out.println("Please enter your name: ");
                     String name = in.next();
                     booking.setReservationName(name);
@@ -233,8 +334,7 @@ public class RoomMenu {
 
                         if (rTy.equals("S") || rTy.equals("s")) {
                             acceptableType = true;
-                        }
-                        if (rTy.equals("AP") || rTy.equals("ap")) {
+                        } else if (rTy.equals("AP") || rTy.equals("ap")) {
                             acceptableType = true;
                         } else {
                             System.out.println("Please enter a valid reservation type.");
@@ -244,35 +344,6 @@ public class RoomMenu {
                     }
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
-
-                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                    String checkIn;
-                    ResDate rIn;
-                    try {
-                        checkIn = in.next();
-                        rIn = new ResDate(checkIn);
-                        System.out.println("Check in date is: " + checkIn);
-                        booking.setCheckIn(rIn);
-
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                    }
-
-                    System.out.println("Please enter your check out date in the format dd/mm/yyyy");
-
-                    String checkOut;
-                    ResDate rOut;
-                    try {
-                        checkOut = in.next();
-                        rOut = new ResDate(checkOut);
-                        System.out.println("Check out date is: " + checkOut);
-                        booking.setCheckIn(rOut);
-
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Please enter your check out date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                    }
 
                     //Check if the booking number is unique before confirmation
                     //And change it if it's not
@@ -290,9 +361,9 @@ public class RoomMenu {
                         }
                         booking.setNewReservationNumber();
                     }
-
+                    booking.getBookingCost(booking.getReservationNumber(), calender);
                     System.out.println("Your booking information: ");
-                    // System.out.println(booking.diplayBooking());
+                    System.out.println(booking.diplayBooking());
                     System.out.println("1) Confirm \n2) Cancel");
                     int confirm = in.nextInt();
                     if (confirm == 1) {
@@ -311,9 +382,39 @@ public class RoomMenu {
                 //3 Star Hotel Tree
                 if (command1 == 3) {
 
+                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                    String checkIn = null;
+                    ResDate rIn = new ResDate();
+                    try {
+                        checkIn = in.next();
+                        rIn = new ResDate(checkIn);
+
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
+                        checkIn = in.next();
+                    }
+                    System.out.println("Check in date is: " + checkIn);
+                    booking.setCheckIn(new ResDate(checkIn));
+
+                    System.out.println("Please enter your check out date in the format dd/mm/yyyy");
+
+                    String checkOut = null;
+                    ResDate rOut = new ResDate();
+                    try {
+                        checkOut = in.next();
+                        rOut = new ResDate(checkOut);
+
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println("Please enter your check out date in the format dd/mm/yyyy");
+                        checkOut = in.next();
+                    }
+                    System.out.println("Check out date is: " + checkOut);
+                    booking.setCheckIn(new ResDate(checkOut));
+
                     System.out.println("How many rooms would you like to book:");
                     int numOfRooms = in.nextInt();
-                    Reservation[] roomsToBeBooked = new Reservation[numOfRooms];
+                    Reservation[] roomsToBeReserved = new Reservation[numOfRooms];
+                    Room[] roomsToBeBooked = new Room[numOfRooms];
 
                     //Takes in each room that they want to book and it's details
                     //Adds it to a roomsToBeBooked array
@@ -332,11 +433,46 @@ public class RoomMenu {
                         }
                         int roomIndex = in.nextInt();
                         Room[] roomArray = hotel3.getRoomsAvailable();
-                        //Problem
+
                         Room room = roomArray[roomIndex];
                         String roomType = room.getType();
                         reservation.setRoomType(roomType);
 
+                        //Check booked out, get new info if it is booked out
+                        LocalDate dayIn = LocalDate.of(rIn.getYear(), rIn.getMonth(), rIn.getDay());
+                        int dayOfYearIn = dayIn.getDayOfYear();
+
+                        LocalDate dayOut = LocalDate.of(rOut.getYear(), rOut.getMonth(), rOut.getDay());
+                        int dayOfYearOut = dayOut.getDayOfYear();
+
+                        boolean bookedOut = false;
+                        for (int k = 0; k < dayOfYearOut - dayOfYearIn; k++) {
+                            LocalDate dateCheck = dayIn.plusDays(k);
+                            ResDate dateChck = new ResDate(dateCheck.getDayOfMonth(),
+                                    dateCheck.getMonthValue(), dateCheck.getYear());
+
+                            int countReservations = calender.reservationsOnDayForRoomType(dateChck, room);
+                            if (countReservations >= room.getNoOfRooms()) {
+                                bookedOut = true;
+                            }
+                        }
+                        if (bookedOut == true) {
+                            System.out.println("That room is booked out for your specified dates, please choose another room.");
+                            System.out.println(" ");
+                            System.out.println("Room number:" + (i + 1));
+
+                            System.out.println("What type of room would you like to book:");
+
+                            for (String r : rooms) {
+                                System.out.println(r);
+                            }
+                            roomIndex = in.nextInt();
+
+                            room = roomArray[roomIndex];
+                            roomType = room.getType();
+                            reservation.setRoomType(roomType);
+
+                        }
                         System.out.println("For how many people: ");
                         int occupancy = in.nextInt();
                         while (occupancy > room.getMax()) {
@@ -345,10 +481,12 @@ public class RoomMenu {
                             occupancy = in.nextInt();
                         }
                         reservation.setRoomOccupancy(occupancy);
-
-                        roomsToBeBooked[i] = reservation;
+                        roomsToBeBooked[i] = room;
+                        roomsToBeReserved[i] = reservation;
 
                     }
+                    booking.setRoomsToBook(roomsToBeBooked);
+                    booking.setRoomsToReserve(roomsToBeReserved);
                     System.out.println("Please enter your name: ");
                     String name = in.next();
                     booking.setReservationName(name);
@@ -364,8 +502,7 @@ public class RoomMenu {
 
                         if (rTy.equals("S") || rTy.equals("s")) {
                             acceptableType = true;
-                        }
-                        if (rTy.equals("AP") || rTy.equals("ap")) {
+                        } else if (rTy.equals("AP") || rTy.equals("ap")) {
                             acceptableType = true;
                         } else {
                             System.out.println("Please enter a valid reservation type.");
@@ -376,34 +513,6 @@ public class RoomMenu {
                     ReservationType rType = new ReservationType(rTy);
                     booking.setrType(rType);
 
-                    System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                    String checkIn;
-                    ResDate rIn;
-                    try {
-                        checkIn = in.next();
-                        rIn = new ResDate(checkIn);
-                        System.out.println("Check in date is: " + checkIn);
-                        booking.setCheckIn(rIn);
-
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Please enter your check in date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                    }
-
-                    System.out.println("Please enter your check out date in the format dd/mm/yyyy");
-
-                    String checkOut;
-                    ResDate rOut;
-                    try {
-                        checkOut = in.next();
-                        rOut = new ResDate(checkOut);
-                        System.out.println("Check out date is: " + checkOut);
-                        booking.setCheckIn(rOut);
-
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Please enter your check out date in the format dd/mm/yyyy");
-                        checkIn = in.next();
-                    }
                     //Check if the booking number is unique before confirmation
                     //And change it if it's not
                     String bookingNum = booking.getReservationNumber();
@@ -420,7 +529,7 @@ public class RoomMenu {
                         }
                         booking.setNewReservationNumber();
                     }
-
+                    booking.getBookingCost(booking.getReservationNumber(), calender);
                     System.out.println("Your booking information: ");
                     System.out.println(booking.diplayBooking());
                     System.out.println("1) Confirm \n2) Cancel");
