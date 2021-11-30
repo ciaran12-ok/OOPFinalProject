@@ -1,48 +1,82 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
- *
- * @author Áine Sweeny
+ * Class to read in all the information from the l4Hotel.csv file
+ * @author Aine
  */
-import java.util.Scanner;
-import java.util.ArrayList;
 public class ReadFile {
-    
-    public static void main(String[] args) throws Exception{
+
+    private String[][] temp;
+
+   
+    /**
+     * Reads in csv file, splits each line using comma delimiter
+     * @return String[][]
+     * @throws FileNotFoundException 
+     */
+    public String[][] readCsvFile() throws FileNotFoundException {
+        //NOTE: make sure you put the file l4Hotels.csv in the netBeans project
+        //folder for this project so it can be found
         java.io.File file = new java.io.File("l4Hotels.csv");
-        ArrayList<String[]> rooms = new ArrayList<String[]>();
         Scanner input = new Scanner(file);
-        
-        while(input.hasNext()){
-            String line = input.nextLine();
-            String[] LineParts = line.split(",");
-            rooms.add(LineParts);
+
+        String line;
+        this.temp = new String[11][12];
+        int i = 0;
+        while (input.hasNext()) {
+            line = input.nextLine();
+            this.temp[i] = line.split(",");
+            i++;
         }
         input.close();
-        
-        for (int i = 0;i < rooms.size(); i ++){
-            for (int j = 0; j<rooms.get(i).length; j ++){
-                System.out.printf("! " + rooms.get(i)[j]);
-                System.out.println();
-            }
-        }
-        // write get methods for all rooms depending on main menu
-        // keep in this class or move to different one?
-        for (int i = 0;i < rooms.size(); i ++){
-                String type = rooms.get(i)[0];
-                System.out.println(type);
-                if(type.equals("5-star")){
-                    for(int a = 2; a < 5; a ++){
-                    String room = rooms.get(a)[1];
-                    System.out.println(room);
-                }// to be finished
-            }
-        
+        return temp;
     }
     
+    
+     public String[][] ExampleReservations() throws FileNotFoundException {
+        //NOTE: make sure you put the file l4Hotels.csv in the netBeans project
+        //folder for this project so it can be found
+        java.io.File file = new java.io.File("ExampleReservations.csv");
+        Scanner input = new Scanner(file);
+        
+        String line;
+        this.temp = new String[9][9];
+        int i = 0;
+        while (input.hasNext()) {
+            line = input.nextLine();
+            this.temp[i] = line.split(",");
+            i++;
+        }
+        input.close();
+        return temp;
+    }
+
 }
+
+/**
+ * A class to test is the readFile working as expected
+ *
+ * @author Orla
+ */
+class TestReadFile {
+
+    public static void main(String[] args) {
+        ReadFile file = new ReadFile();
+        try {
+            String[][] input = file.readCsvFile();
+
+            for (int i = 0; i < input.length; i++) {
+                System.out.println("");
+                for (int j = 0; j < input[i].length; j++) {
+                    System.out.print(input[i][j] + " ");
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            System.err.println("File not found, try again");
+        }
+    }
 }
